@@ -1,0 +1,129 @@
+\documentclass[11pt]{beamer}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,bm,mathrsfs}
+\usepackage{mathtools}
+\usepackage[safe,tone]{tipa}
+\usepackage{tikz}
+\usetikzlibrary{automata,shapes}
+\usepackage{calc}
+\usepackage{cases}
+\usepackage[many]{tcolorbox}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\newcolumntype{C}[1]{>{\hsize=#1\linewidth\centering\arraybackslash}X}
+\newcolumntype{L}[1]{>{\hsize=#1\linewidth\raggedright\arraybackslash}X}
+\newcolumntype{R}[1]{>{\hsize=#1\linewidth\raggedleft\arraybackslash}X}
+\usetheme{sakura}
+\usefonttheme{professionalfonts}
+\makeatletter
+\newif\if@japanese%
+\@japanesetrue%
+\if@japanese%
+    \usepackage{luatexja-ruby}
+    \ltjsetparameter{jacharrange={-2,-3}}
+    \ltjsetparameter{alxspmode={`#,allow}}
+    \newcommand{\ten}{、}
+    \newcommand{\maru}{。}
+    \newcommand{\zenkakudash}{\hspace{.6pt}\rule[3.2pt]{13pt}{.5pt}\hspace{.6pt}}
+\fi
+\makeatother
+\newfontfamily\smallcaps[Letters={UppercaseSmallCaps},BoldFont={Fira Sans}]{Fira Sans Light}
+\usepackage{exscale}
+\usepackage[sort]{natbib}
+\renewcommand{\bibsection}{}
+\let\oldbibitem=\bibitem
+\renewcommand{\bibitem}[2][]{\label{#2}\oldbibitem[#1]{#2}}
+\let\oldcite=\citet
+\renewcommand\citet[1]{\hyperlink{#1}{\oldcite{#1}}}
+\let\oldcitep=\citep
+\renewcommand\citep[1]{\hyperlink{#1}{\oldcitep{#1}}}
+\usepackage{indent}
+\usepackage{framed}
+\usepackage{udline}
+\usepackage{listings}
+\usepackage[noend]{algpseudocode}
+\everymath{\displaystyle}
+\tcbset{%
+    coltext=sDarkGray,
+    colback=sLightGray,
+}
+\include{mathcommands}
+\newcommand\enumref[1]{\textcolor{sRed}{\ref{#1}}}
+\newcommand\thc[1]{\multicolumn{1}{c}{\textbf{#1}}}
+\newcommand\marker[1]{\colorbox{sYellow}{#1}}
+\newcommand\bluemarker[1]{\colorbox{sLightBlue}{#1}}
+\newenvironment{xleftbar}[1][\hsize]{%
+    \def\FrameCommand{\vrule width 3pt \hspace{10pt}}%
+    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+\tikzset{%
+    state/.style={%
+        draw,
+        minimum height=2em,
+        inner sep=5pt,
+        text centered,
+    }
+}
+\hypersetup{%
+    unicode=true,
+    backref=true,
+    hidelinks=true
+}
+\pgfkeys{/metropolis/outer/.cd,
+    numbering=fraction,
+    progressbar=none
+}
+\pgfkeys{/metropolis/inner/.cd,
+    sectionpage=simple,
+    subsectionpage=simple
+}
+\makeatletter
+\newcommand*{\getlength}[1]{\strip@pt#1}
+\makeatother
+\usepackage{gb4e,cgloss4e}
+\noautomath%
+\title{主題}
+\subtitle{副題}
+\institute{所属}
+\author{名前}
+\makeatletter
+\if@japanese%
+    \date{{\number\year}年{\number\month}月{\number\day}日}
+\else
+    \date{\today}
+\fi
+\makeatother
+\begin{document}
+
+\begin{frame}
+    \nocite{demo}
+    \maketitle
+\end{frame}
+
+\begin{frame}
+\frametitle{デモ}
+    \begin{exe}
+        \ex%
+        \glll {辞書} {を} {食べた\maru{}} \\
+              {jisho} {wo} {tabeta} \\
+              {dictionary} {\textsc{acc}} {eat+\textsc{past}} \\
+              \trans {“(I) ate an dictionary.”}
+    \end{exe}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+\if@japanese%
+    \frametitle{参考文献}
+\else
+    \frametitle{Reference}
+\fi
+\begingroup
+\scriptsize
+    \setbeamertemplate{bibliography item}[triangle]
+    \bibliographystyle{j}
+    \bibliography{demo}
+\endgroup
+\end{frame}
+
+\end{document}
