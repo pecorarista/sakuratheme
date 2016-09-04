@@ -2,7 +2,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,bm,mathrsfs}
 \usepackage{mathtools}
-\usepackage[safe,tone]{tipa}
+% \usepackage[safe,tone]{tipa}
 \usepackage{tikz}
 \usetikzlibrary{automata,shapes}
 \usepackage{calc}
@@ -74,10 +74,6 @@
     numbering=fraction,
     progressbar=none
 }
-\pgfkeys{/metropolis/inner/.cd,
-    sectionpage=simple,
-    subsectionpage=simple
-}
 \makeatletter
 \newcommand*{\getlength}[1]{\strip@pt#1}
 \makeatother
@@ -101,8 +97,9 @@
     \maketitle
 \end{frame}
 
+\section{言語}
 \begin{frame}
-\frametitle{デモ}
+\frametitle{番号付きの例文}
     \begin{exe}
         \ex%
         \glll {辞書} {を} {食べた\maru{}} \\
@@ -110,6 +107,17 @@
               {dictionary} {\textsc{acc}} {eat+\textsc{past}} \\
               \trans {“(I) ate an dictionary.”}
     \end{exe}
+\end{frame}
+
+\section{数式}
+\subsection{積分}
+\begin{frame}
+\frametitle{積分}
+\begin{align}
+    \int
+    % \exp ← 入れると落ちる
+    % LaTeX Error: Command \item invalid in math mode.
+\end{align}
 \end{frame}
 
 \begin{frame}[allowframebreaks]

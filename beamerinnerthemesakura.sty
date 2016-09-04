@@ -34,15 +34,15 @@
   /metropolis/inner/subsectionpage/.cd,
     .is choice,
     none/.code=\metropolis@disablesubsectionpage,
-    simple/.code={\metropolis@enablesubsectionpage
+    simple/.code={\sakura@enablesubsectionpage
                   \setbeamertemplate{section page}[simple]},
     progressbar/.code={\metropolis@enablesubsectionpage
                        \setbeamertemplate{section page}[progressbar]},
 }
 \newcommand{\metropolis@inner@setdefaults}{
   \pgfkeys{/metropolis/inner/.cd,
-    sectionpage=progressbar,
-    subsectionpage=none
+    sectionpage=simple,
+    subsectionpage=simple
   }
 }
 \setbeamertemplate{title page}{
@@ -160,12 +160,14 @@
 }
 \newcommand{\sakura@enablesectionpage}{%
   \AtBeginSection{%
-    \begingroup
-    \setbeamercolor{background canvas}{parent=palette primary}
-    \begin{frame}[plain]
-      \tableofcontents[currentsection,subsectionstyle=shaded]
-    \end{frame}
-    \endgroup
+    \ifbeamer@inframe
+      \relax
+    \else
+        \begingroup
+          \setbeamercolor{background canvas}{parent=palette primary}
+          \frame[plain,c,noframenumbering]{\tableofcontents[currentsection,subsectionstyle=shaded]}
+        \endgroup
+    \fi
   }
 }
 \setbeamertemplate{subsection page}{%
@@ -176,14 +178,16 @@
     % intentionally empty
   }
 }
-\newcommand{\metropolis@enablesubsectionpage}{%
+\newcommand{\sakura@enablesubsectionpage}{%
   \AtBeginSubsection{%
-    \begingroup
-    \setbeamercolor{background canvas}{parent=palette primary}
-    \begin{frame}[plain]
-      \tableofcontents[sectionstyle=shaded,currentsection,subsectionstyle=shaded,currentsubsection]
-    \end{frame}
-    \endgroup
+    \ifbeamer@inframe
+      \relax
+    \else
+        \begingroup
+          \setbeamercolor{background canvas}{parent=palette primary}
+          \frame[plain,c,noframenumbering]{\tableofcontents[sectionstyle=shaded,currentsection,subsectionstyle=shaded,currentsubsection]}
+        \endgroup
+    \fi
   }
 }
 \newlength{\metropolis@progressonsectionpage}
