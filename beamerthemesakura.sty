@@ -1,4 +1,6 @@
-%% This is file `beamerthemesakura.sty',
+%%
+%% This is file `beamerthememetropolis.sty',
+%% generated with the docstrip utility.
 %%
 %% The original source files were:
 %%
@@ -15,19 +17,18 @@
 %% International License (https://creativecommons.org/licenses/by-sa/4.0/).
 %% ---------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerthemesakura}
-  [2016/06/09 v1.1 Sakura Beamer theme]
+\ProvidesPackage{beamerthemesakura}[2016/09/03 Sakura Beamer theme]
 \RequirePackage{etoolbox}
 \RequirePackage{pgfopts}
-\pgfkeys{/metropolis/.cd,
+\pgfkeys{/sakura/.cd,
   .search also={
-    /metropolis/inner,
-    /metropolis/outer,
-    /metropolis/color,
-    /metropolis/font,
+    /sakura/inner,
+    /sakura/outer,
+    /sakura/color,
+    /sakura/font,
   }
 }
-\pgfkeys{%
+\pgfkeys{
   /metropolis/titleformat plain/.cd,
     .is choice,
     regular/.code={%
@@ -53,8 +54,8 @@
       }
     },
 }
-\pgfkeys{%
-  /metropolis/titleformat/.code=\pgfkeysalso{%
+\pgfkeys{
+  /metropolis/titleformat/.code=\pgfkeysalso{
       font/titleformat title=#1,
       font/titleformat subtitle=#1,
       font/titleformat section=#1,
@@ -70,7 +71,7 @@
   darkcolors/.code=\pgfkeysalso{color/background=dark},
   blockbg/.code=\pgfkeysalso{color/block=fill, inner/block=fill},
 }
-\newcommand{\metropolis@setdefaults}{%
+\newcommand{\metropolis@setdefaults}{
   \pgfkeys{/metropolis/.cd,
     titleformat plain=regular,
   }
@@ -97,7 +98,7 @@
 }
 \newcommand{\mreducelistspacing}{\vspace{-\topsep}}
 \metropolis@setdefaults
-\ProcessPgfOptions{/metropolis}
+\ProcessPgfOptions{/sakura}
 \endinput
 %%
-%% End of file `beamerthemesakura.sty'.
+%% End of file `beamerthememetropolis.sty'.
