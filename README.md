@@ -1,8 +1,10 @@
 Sakura theme
 ============
 
-This is a beamer template based on [Metropolis](https://github.com/matze/mtheme).
-This can be used in languages which are written in non-latin characters.
+This is a beamer template based on [Metropolis](https://github.com/matze/mtheme) mainly for Japanese.
+
+これは主に日本語を対象とした beamer のテンプレートです．
+[Metropolis](https://github.com/matze/mtheme) に変更を加える形で作成しています．
 
 ## Typesetting
 

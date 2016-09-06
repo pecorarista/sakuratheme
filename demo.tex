@@ -2,7 +2,6 @@
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,bm,mathrsfs}
 \usepackage{mathtools}
-% \usepackage[safe,tone]{tipa}
 \usepackage{tikz}
 \usetikzlibrary{automata,shapes}
 \usepackage{calc}
@@ -77,6 +76,7 @@
 \makeatletter
 \newcommand*{\getlength}[1]{\strip@pt#1}
 \makeatother
+\usepackage{toneletter}
 \usepackage{gb4e,cgloss4e}
 \noautomath%
 \title{主題}
@@ -107,6 +107,28 @@
               {dictionary} {\textsc{acc}} {eat+\textsc{past}} \\
               \trans {“(I) ate an dictionary.”}
     \end{exe}
+\end{frame}
+
+\begin{frame}
+    \frametitle{音声}
+    Unicode入力で，IMEに音声記号を入力するための手段があれば，
+    \texttt{tipa}パッケージは必要ありません．
+
+    ただし，基準線を用いた声調記号については\texttt{tipa}を用いたほうが便利だと思います．
+    声調記号を扱うスタイルファイル\texttt{tone.sty}の一部を切り出して変更したものを
+    \texttt{toneletter.sty}としてレポジトリに置いてあるので，\texttt{toneltter}などのように使うと
+    他のパッケージとの衝突を避けられると思います．
+    \begin{table}
+        \centering
+        \caption{標準中国語の声調}
+        \begin{tabular}{cccc}
+            T1 & T2 & T3 & T3 \\
+            ma\toneletter{55} &
+            ma\toneletter{35} &
+            ma\toneletter{214} &
+            ma\toneletter{51} \\
+        \end{tabular}
+    \end{table}
 \end{frame}
 
 \section{数式}
