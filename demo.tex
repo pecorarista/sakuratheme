@@ -18,15 +18,9 @@
 \newif\if@japanese%
 \@japanesetrue%
 \if@japanese%
-    \usepackage{luatexja-ruby}
-    \ltjsetparameter{jacharrange={-2,-3}}
-    \ltjsetparameter{alxspmode={`#,allow}}
-    \newcommand{\ten}{、}
-    \newcommand{\maru}{。}
-    \newcommand{\zenkakudash}{\hspace{.6pt}\rule[3.2pt]{13pt}{.5pt}\hspace{.6pt}}
+    \include{japanese}
 \fi
 \makeatother
-\newfontfamily\smallcaps[Letters={UppercaseSmallCaps},BoldFont={Fira Sans}]{Fira Sans Light}
 \usepackage{exscale}
 \usepackage[sort]{natbib}
 \renewcommand{\bibsection}{}
@@ -97,18 +91,20 @@
     \maketitle
 \end{frame}
 
-\section{言語}
+\section{言語学関連}
+\subsection{例文と対訳}
 \begin{frame}
 \frametitle{番号付きの例文}
     \begin{exe}
         \ex%
-        \glll {辞書} {を} {食べた\maru{}} \\
+        \glll {辞書} {を} {食べた。} \\
               {jisho} {wo} {tabeta} \\
               {dictionary} {\textsc{acc}} {eat+\textsc{past}} \\
               \trans {“(I) ate an dictionary.”}
     \end{exe}
 \end{frame}
 
+\subsection{音声}
 \begin{frame}
     \frametitle{音声}
     Unicode入力で，IMEに音声記号を入力するための手段があれば，
@@ -131,13 +127,29 @@
     \end{table}
 \end{frame}
 
-\section{数式}
-\subsection{積分}
+\section{数学関連}
 \begin{frame}
 \frametitle{積分}
 \begin{align}
     \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}\sigma}\exp\parentheses{-\frac{\parentheses{x - \mu}^2}{2\sigma^2}} dx = 1
 \end{align}
+\end{frame}
+
+\begin{frame}
+\frametitle{日本語で書かれた文書の引用}
+\texttt{{\textbackslash}cite\{key\}}で\citet{demo}や\citet{japanese}のように引用されます．
+    \begin{itemize}
+        \item PDF上で
+        \item 参考文献を
+        \item クリックすると
+        \item 参考文献一覧に飛びます
+    \end{itemize}
+\end{frame}
+
+\section{まとめ}
+\begin{frame}
+\frametitle{まとめ}
+まとめ
 \end{frame}
 
 \begin{frame}[allowframebreaks]

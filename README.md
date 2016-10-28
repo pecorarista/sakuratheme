@@ -8,9 +8,8 @@ This is a beamer template based on [Metropolis](https://github.com/matze/mtheme)
 
 ## Typesetting
 
-```
-latexmk demo.tex
-```
+`latexmk demo.tex` で PDF が作成されます．
+ファイルの変更が起きるごとにタイプセットしたい場合は `latexmk -pvc demo.tex` としてください．
 
 ## Reference
 + [Metropolis](https://github.com/matze/mtheme)
