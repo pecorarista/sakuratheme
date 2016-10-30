@@ -1,17 +1,8 @@
 \documentclass[11pt]{beamer}
 \usepackage{lmodern}
-\usepackage{amsmath,amssymb,bm,mathrsfs}
-\usepackage{mathtools}
+\usepackage{amsmath}
 \usepackage{tikz}
-\usetikzlibrary{automata,shapes}
-\usepackage{calc}
-\usepackage{cases}
-\usepackage[many]{tcolorbox}
-\usepackage{tabularx}
 \usepackage{booktabs}
-\newcolumntype{C}[1]{>{\hsize=#1\linewidth\centering\arraybackslash}X}
-\newcolumntype{L}[1]{>{\hsize=#1\linewidth\raggedright\arraybackslash}X}
-\newcolumntype{R}[1]{>{\hsize=#1\linewidth\raggedleft\arraybackslash}X}
 \usetheme{sakura}
 \usefonttheme{professionalfonts}
 \makeatletter
@@ -32,24 +23,13 @@
 \renewcommand\citep[1]{\hyperlink{#1}{\oldcitep{#1}}}
 \usepackage{indent}
 \usepackage{framed}
-\usepackage{udline}
 \usepackage{listings}
 \usepackage[noend]{algpseudocode}
 \everymath{\displaystyle}
-\tcbset{%
-    coltext=sDarkGray,
-    colback=sLightGray,
-}
 \include{mathcommands}
-\newcommand\enumref[1]{\textcolor{sRed}{\ref{#1}}}
-\newcommand\thc[1]{\multicolumn{1}{c}{\textbf{#1}}}
+\newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newcommand\marker[1]{\colorbox{sYellow}{#1}}
 \newcommand\bluemarker[1]{\colorbox{sLightBlue}{#1}}
-\newenvironment{xleftbar}[1][\hsize]{%
-    \def\FrameCommand{\vrule width 3pt \hspace{10pt}}%
-    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
-}
-{\endMakeFramed}
 \tikzset{%
     state/.style={%
         draw,
@@ -112,19 +92,34 @@
 
     ただし，基準線を用いた声調記号については\texttt{tipa}を用いたほうが便利だと思います．
     声調記号を扱うスタイルファイル\texttt{tone.sty}の一部を切り出して変更したものを
-    \texttt{toneletter.sty}としてレポジトリに置いてあるので，\texttt{toneltter}などのように使うと
-    他のパッケージとの衝突を避けられると思います．
+    \texttt{toneletter.sty}として使うと他のパッケージとの衝突を避けて使用できます．
+
+    \bigskip
+
     \begin{table}
-        \centering
+        \centering\small
         \caption{標準中国語の声調}
         \begin{tabular}{cccc}
+            % \toprule, \midrule, and \bottomrule need booktabs
+            \toprule
             T1 & T2 & T3 & T3 \\
+            \midrule
             ma\toneletter{55} &
             ma\toneletter{35} &
             ma\toneletter{214} &
             ma\toneletter{51} \\
+            \bottomrule
         \end{tabular}
     \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{引用}
+    \begin{leftbar}
+        「あの森\ruby{琴}{ライラ}の宿でせう。あたしきつとあの森の中には、むかしの大きなオーケストラの人たちが
+        集まつていらつしやると思ふわ。まはりには青い孔雀やなんかたくさんゐると思ふわ。」
+        女の子が答へました。\hfill 宮澤賢治「銀河鉄道の夜」
+    \end{leftbar}
 \end{frame}
 
 \section{数学関連}

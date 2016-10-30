@@ -1,3 +1,8 @@
 \usepackage{luatexja-ruby}
-\ltjsetparameter{jacharrange={-2,-3}}
-\ltjsetparameter{alxspmode={`#,allow}}
+\ltjsetparameter{%
+    jacharrange={%
+        -2, % Exclude Greek and Cyrillic letters.
+        -3  % Punctuations and Miscellaneous symbols.
+    },
+    alxspmode={`#,allow}
+}
