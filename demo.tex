@@ -8,9 +8,8 @@
 \makeatletter
 \newif\if@japanese%
 \@japanesetrue%
-\if@japanese%
-    \include{japanese}
-\fi
+\makeatother
+\include{japanese} % charrange などの設定
 \makeatother
 \usepackage{exscale}
 \usepackage[sort]{natbib}
@@ -27,6 +26,9 @@
 \usepackage[noend]{algpseudocode}
 \everymath{\displaystyle}
 \include{mathcommands}
+\usepackage{arabluatex}
+\newfontfamily\arabicfont[Script=Arabic]{Noto Naskh Arabic}
+\newcommand\rtltriangle{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleleft$}}
 \newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newcommand\marker[1]{\colorbox{sYellow}{#1}}
 \newcommand\bluemarker[1]{\colorbox{sLightBlue}{#1}}
@@ -102,7 +104,7 @@
         \begin{tabular}{cccc}
             % \toprule, \midrule, and \bottomrule need booktabs
             \toprule
-            T1 & T2 & T3 & T3 \\
+            \header{T1} & \header{T2} & \header{T3} & \header{T3} \\
             \midrule
             ma\toneletter{55} &
             ma\toneletter{35} &
@@ -114,12 +116,29 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{引用}
+    \frametitle{長め文章の引用}
     \begin{leftbar}
         「あの森\ruby{琴}{ライラ}の宿でせう。あたしきつとあの森の中には、むかしの大きなオーケストラの人たちが
         集まつていらつしやると思ふわ。まはりには青い孔雀やなんかたくさんゐると思ふわ。」
         女の子が答へました。\hfill 宮澤賢治「銀河鉄道の夜」
     \end{leftbar}
+\end{frame}
+
+\begin{frame}
+
+    \frametitle{ラテン文字、キリル文字、アラビア文字}
+    \setlength{\leftmargini}{1em}
+    \begin{itemize}
+        \item Falsches Üben von Xylophonmusik quält jeden größeren Zwerg
+
+        \item Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.
+        % Temporary solution
+        \setRL
+        \item[\rtltriangle]\hspace{1.2em}
+            \arb[fullvoc]{.sif
+                xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
+                \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
+    \end{itemize}
 \end{frame}
 
 \section{数学関連}
@@ -131,7 +150,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{日本語で書かれた文書の引用}
+\frametitle{日本語で書かれた参考文献の引用}
 \texttt{{\textbackslash}cite\{key\}}で\citet{demo}や\citet{japanese}のように引用されます．
     \begin{itemize}
         \item PDF上で

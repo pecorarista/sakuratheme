@@ -89,13 +89,6 @@
   }
   \renewcommand{\kanjifamilydefault}{\gtdefault}
 
-  \RequirePackage{arabluatex}
-  \iffontsavailable{Noto Naskh Arabic}{%
-    \newfontfamily\arabicfont[Script=Arabic]{Noto Naskh Arabic}
-  }{%
-    \relax
-  }
-
   \AtBeginEnvironment{tabular}{%
     \addfontfeature{Numbers={Monospaced}}%
   }
