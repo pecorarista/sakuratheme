@@ -11,7 +11,6 @@
 \makeatother
 \include{japanese} % charrange などの設定
 \makeatother
-\usepackage{exscale}
 \usepackage[sort]{natbib}
 \renewcommand{\bibsection}{}
 \let\oldbibitem=\bibitem
@@ -27,7 +26,23 @@
 \everymath{\displaystyle}
 \include{mathcommands}
 \usepackage{arabluatex}
-\newfontfamily\arabicfont[Script=Arabic]{Noto Naskh Arabic}
+\makeatletter
+\newif\if@kufi
+% \@kufifalse
+\@kufifalse
+\if@kufi
+    \newfontfamily\arabicfont[Script=Arabic]{Noto Kufi Arabic}
+    \SetTranslitConvention{loc}
+    \newfontfamily\translitfont[Ligatures=TeX,ItalicFont={Fira Sans Light Italic}]%
+                               {Fira Sans Light}
+\else
+    \newfontfamily\arabicfont[Script=Arabic]{Amiri} % `Noto Naskh Arabic`
+    \SetTranslitConvention{dmg}
+    \newfontfamily\translitfont[Ligatures=TeX]{FreeSerif}
+\fi
+\makeatother
+\SetTranslitFont{\translitfont}
+\SetTranslitStyle{\itshape} % `itshape`, `upshape`, or `slshape`
 \newcommand\rtltriangle{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleleft$}}
 \newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newcommand\marker[1]{\colorbox{sYellow}{#1}}
@@ -48,6 +63,9 @@
 \pgfkeys{/metropolis/outer/.cd,
     numbering=fraction,
     progressbar=none
+}
+\lstset{%
+    basicstyle=\tiny\ttfamily
 }
 \makeatletter
 \newcommand*{\getlength}[1]{\strip@pt#1}
@@ -125,20 +143,44 @@
 \end{frame}
 
 \begin{frame}
-
-    \frametitle{ラテン文字、キリル文字、アラビア文字}
+    \frametitle{パングラム}
     \setlength{\leftmargini}{1em}
     \begin{itemize}
-        \item Falsches Üben von Xylophonmusik quält jeden größeren Zwerg
+        \item ドイツ語アルファベット
 
-        \item Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.
+            Falsches Üben von Xylophonmusik quält jeden größeren Zwerg
+
+        \item ロシア語アルファベット
+
+            Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.
         % Temporary solution
-        \setRL
-        \item[\rtltriangle]\hspace{1.2em}
-            \arb[fullvoc]{.sif
-                xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
-                \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
     \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{アラビア語アルファベットのパングラム}
+
+    \setRL
+        \arb[fullvoc]{.sif
+            xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
+            \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
+
+    \setLR
+        \arb[trans]{.sif
+            xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
+            \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
+
+    \begin{leftbar}
+        \begin{lstlisting}
+\usepackage{arabluatex}
+\arb[fullvoc]{.sif xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
+    \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
+
+
+\arb[trans]{.sif xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
+    \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
+        \end{lstlisting}
+    \end{leftbar}
 \end{frame}
 
 \section{数学関連}
