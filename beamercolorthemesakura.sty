@@ -16,25 +16,6 @@
 %% ---------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamercolorthemesakura}[2016/06/09 Sakura color theme]
-\RequirePackage{pgfopts}
-\pgfkeys{%
-  /metropolis/color/block/.cd,
-    .is choice,
-    transparent/.code=\metropolis@block@transparent,
-    fill/.code=\metropolis@block@fill,
-}
-\pgfkeys{%
-  /metropolis/color/background/.cd,
-    .is choice,
-    dark/.code=\metropolis@colors@dark,
-    light/.code=\metropolis@colors@light,
-}
-\newcommand{\metropolis@color@setdefaults}{%
-  \pgfkeys{/metropolis/color/.cd,
-    background=light,
-    block=transparent,
-  }
-}
 \definecolor{sDarkRed}{HTML}{B05463}
 \definecolor{sLightBlue}{HTML}{86B5C7}
 \definecolor{sDarkBlue}{HTML}{5070D7}
@@ -136,9 +117,5 @@
 \setbeamercolor{footnote}{fg=normal text.fg!90}
 \setbeamercolor{footnote mark}{fg=.}
 \setbeamercolor{local structure}{fg=sRed}
-\metropolis@color@setdefaults
-\ProcessPgfPackageOptions{/metropolis/color}
 \mode<all>
-\endinput
-%%
 %% End of file `beamercolorthemesakura.sty'.
