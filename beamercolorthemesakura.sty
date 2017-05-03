@@ -27,24 +27,11 @@
 \definecolor{sLightBrown}{HTML}{DAB27D}
 \definecolor{sPurple}{HTML}{C296D5}
 \definecolor{sYellow}{HTML}{FBE381}
-
-\newcommand{\metropolis@colors@dark}{%
-  \setbeamercolor{normal text}{%
-    fg=black!2,
-    bg=sDarkRed
-  }
-}
-\newcommand{\metropolis@colors@light}{%
-  \setbeamercolor{normal text}{%
-    fg=sDarkGray,
-    bg=black!2
-  }
+\setbeamercolor{normal text}{%
+    fg=sDarkGray
 }
 \setbeamercolor{alerted text}{%
   fg=sLightBrown
-}
-\setbeamercolor{example text}{%
-  fg=sDarkBlue
 }
 \setbeamercolor{titlelike}{use=normal text, parent=normal text}
 \setbeamercolor{author}{use=normal text, parent=normal text}
@@ -64,58 +51,9 @@
   use=palette secondary,
   parent=palette secondary
 }
-\setbeamercolor{progress bar}{%
-  use=alerted text,
-  fg=alerted text.fg,
-  bg=alerted text.fg!50!black!30
-}
-\setbeamercolor{title separator}{%
-  use=progress bar,
-  parent=progress bar
-}
-\setbeamercolor{progress bar in head/foot}{%
-  use=progress bar,
-  parent=progress bar
-}
-\setbeamercolor{progress bar in section page}{%
-  use=progress bar,
-  parent=progress bar
-}
-\newcommand{\metropolis@block@transparent}{%
-  \setbeamercolor{block title}{%
-    use=normal text,
-    fg=normal text.fg,
-    bg=
-  }
-  \setbeamercolor{block body}{%
-    bg=
-  }
-}
-\newcommand{\metropolis@block@fill}{%
-  \setbeamercolor{block title}{%
-    use=normal text,
-    fg=normal text.fg,
-    bg=normal text.bg!80!fg
-  }
-  \setbeamercolor{block body}{%
-    use={block title, normal text},
-    bg=block title.bg!50!normal text.bg
-  }
-}
-\setbeamercolor{block title alerted}{%
-    use={block title, alerted text},
-    bg=block title.bg,
-    fg=alerted text.fg
-}
-\setbeamercolor{block title example}{%
-    use={block title, example text},
-    bg=block title.bg,
-    fg=example text.fg
+\setbeamercolor{footline}{
+  fg=sDarkGray
 }
 \setbeamercolor{block body alerted}{use=block body, parent=block body}
-\setbeamercolor{block body example}{use=block body, parent=block body}
-\setbeamercolor{footnote}{fg=normal text.fg!90}
-\setbeamercolor{footnote mark}{fg=.}
-\setbeamercolor{local structure}{fg=sRed}
 \mode<all>
 %% End of file `beamercolorthemesakura.sty'.

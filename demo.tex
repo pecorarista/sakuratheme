@@ -1,89 +1,31 @@
 \documentclass[11pt]{beamer}
-\usepackage{lmodern}
-\usepackage{amsmath}
-\usepackage{tikz}
-\usepackage{booktabs}
-\usetheme{sakura}
-\usefonttheme{professionalfonts}
-\makeatletter
-\newif\if@japanese%
-\@japanesetrue%
-\makeatother
-\include{japanese} % charrange などの設定
-\makeatother
 \usepackage[sort]{natbib}
-\renewcommand{\bibsection}{}
-\let\oldbibitem=\bibitem
-\renewcommand{\bibitem}[2][]{\label{#2}\oldbibitem[#1]{#2}}
-\let\oldcite=\citet
-\renewcommand\citet[1]{\hyperlink{#1}{\oldcite{#1}}}
-\let\oldcitep=\citep
-\renewcommand\citep[1]{\hyperlink{#1}{\oldcitep{#1}}}
-\usepackage{indent}
 \usepackage{framed}
-\usepackage{listings}
-\usepackage[noend]{algpseudocode}
-\everymath{\displaystyle}
-\include{mathcommands}
-\usepackage{arabluatex}
-\makeatletter
-\newif\if@kufi
-% \@kufifalse
-\@kufifalse
-\if@kufi
-    \newfontfamily\arabicfont[Script=Arabic]{Noto Kufi Arabic}
-    \SetTranslitConvention{loc}
-    \newfontfamily\translitfont[Ligatures=TeX,ItalicFont={Fira Sans Light Italic}]%
-                               {Fira Sans Light}
-\else
-    \newfontfamily\arabicfont[Script=Arabic]{Amiri} % `Noto Naskh Arabic`
-    \SetTranslitConvention{dmg}
-    \newfontfamily\translitfont[Ligatures=TeX]{FreeSerif}
-\fi
 \makeatother
-\SetTranslitFont{\translitfont}
-\SetTranslitStyle{\itshape} % `itshape`, `upshape`, or `slshape`
-\newcommand\rtltriangle{\scriptsize\raise1.25pt\hbox{\donotcoloroutermaths$\blacktriangleleft$}}
-\newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
-\newcommand\marker[1]{\colorbox{sYellow}{#1}}
-\newcommand\bluemarker[1]{\colorbox{sLightBlue}{#1}}
-\tikzset{%
-    state/.style={%
-        draw,
-        minimum height=2em,
-        inner sep=5pt,
-        text centered,
-    }
+\usepackage[no-math]{fontspec}
+\usepackage{luatexja-ruby}
+\ltjsetparameter{%
+    jacharrange={%
+        -2, % Exclude Greek and Cyrillic letters.
+        -3  % Punctuations and Miscellaneous symbols.
+    },
+    alxspmode={`#,allow}
 }
+\usetheme{sakura}
+\title{主題}
+\subtitle{副題}
+\institute{所属}
+\author{名前}
+\date{{\number\year}年{\number\month}月{\number\day}日}
 \hypersetup{%
     unicode=true,
     backref=true,
     hidelinks=true
 }
-\pgfkeys{/metropolis/outer/.cd,
-    numbering=fraction,
-    progressbar=none
-}
-\lstset{%
-    basicstyle=\tiny\ttfamily
-}
-\makeatletter
-\newcommand*{\getlength}[1]{\strip@pt#1}
-\makeatother
-\usepackage{toneletter}
 \usepackage{gb4e,cgloss4e}
 \noautomath%
-\title{主題}
-\subtitle{副題}
-\institute{所属}
-\author{名前}
-\makeatletter
-\if@japanese%
-    \date{{\number\year}年{\number\month}月{\number\day}日}
-\else
-    \date{\today}
-\fi
-\makeatother
+\let\eachwordtwo=\sffamily
+\let\eachwordthree=\sffamily
 \begin{document}
 
 \begin{frame}
@@ -97,115 +39,31 @@
 \frametitle{番号付きの例文}
     \begin{exe}
         \ex%
-        \glll {辞書} {を} {食べた。} \\
-              {jisho} {wo} {tabeta} \\
-              {dictionary} {\textsc{acc}} {eat+\textsc{past}} \\
-              \trans {“(I) ate an dictionary.”}
+        \glll%
+        {憎悪} {の} {炎} {が} {燃え上がった} \\
+        {zouo} {no} {honoo} {ga} {moeagatta} \\
+        {hatred} {\textsc{gen}} {flame} {\textsc{nom}} {burn\_up-\textsc{pst}} \\
+        \trans%
+        ``The flame of hatred burned up.''
     \end{exe}
-\end{frame}
-
-\subsection{音声}
-\begin{frame}
-    \frametitle{音声}
-    Unicode入力で，IMEに音声記号を入力するための手段があれば，
-    \texttt{tipa}パッケージは必要ありません．
-
-    ただし，基準線を用いた声調記号については\texttt{tipa}を用いたほうが便利だと思います．
-    声調記号を扱うスタイルファイル\texttt{tone.sty}の一部を切り出して変更したものを
-    \texttt{toneletter.sty}として使うと他のパッケージとの衝突を避けて使用できます．
-
-    \bigskip
-
-    \begin{table}
-        \centering\small
-        \caption{標準中国語の声調}
-        \begin{tabular}{cccc}
-            % \toprule, \midrule, and \bottomrule need booktabs
-            \toprule
-            \header{T1} & \header{T2} & \header{T3} & \header{T3} \\
-            \midrule
-            ma\toneletter{55} &
-            ma\toneletter{35} &
-            ma\toneletter{214} &
-            ma\toneletter{51} \\
-            \bottomrule
-        \end{tabular}
-    \end{table}
 \end{frame}
 
 \begin{frame}
     \frametitle{長め文章の引用}
     \begin{leftbar}
-        「あの森\ruby{琴}{ライラ}の宿でせう。あたしきつとあの森の中には、むかしの大きなオーケストラの人たちが
-        集まつていらつしやると思ふわ。まはりには青い孔雀やなんかたくさんゐると思ふわ。」
-        女の子が答へました。\hfill 宮澤賢治「銀河鉄道の夜」
+        「あの森\ruby{琴}{ライラ}の宿でせう。
+        あたしきつとあの森の中には、
+        むかしの大きなオーケストラの人たちが集まつていらつしやると思ふわ。
+        まはりには青い孔雀やなんかたくさんゐると思ふわ。」
+        女の子が答へました。
+
+        \hfill 宮澤賢治「銀河鉄道の夜」
     \end{leftbar}
-\end{frame}
-
-\begin{frame}
-    \frametitle{パングラム}
-    \setlength{\leftmargini}{1em}
-    \begin{itemize}
-        \item ドイツ語アルファベット
-
-            Falsches Üben von Xylophonmusik quält jeden größeren Zwerg
-
-        \item ロシア語アルファベット
-
-            Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.
-        % Temporary solution
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-    \frametitle{アラビア語アルファベットのパングラム}
-
-    \setRL
-        \arb[fullvoc]{.sif
-            xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
-            \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
-
-    \setLR
-        \arb[trans]{.sif
-            xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
-            \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
-
-    \begin{leftbar}
-        \begin{lstlisting}
-\usepackage{arabluatex}
-\arb[fullvoc]{.sif xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
-    \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
-
-
-\arb[trans]{.sif xalqa xawdiN kami_tli 'l-^samsi 'i_d bana .gat
-    \LR{\bfseries ---} ya.h.zY_a 'l-.dajI`u bihA najlA|"'a mi`.tAri}
-        \end{lstlisting}
-    \end{leftbar}
-\end{frame}
-
-\section{数学関連}
-\begin{frame}
-\frametitle{積分}
-\begin{align}
-    \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}\sigma}\exp\parentheses{-\frac{\parentheses{x - \mu}^2}{2\sigma^2}} dx = 1
-\end{align}
 \end{frame}
 
 \begin{frame}
 \frametitle{日本語で書かれた参考文献の引用}
-\texttt{{\textbackslash}cite\{key\}}で\citet{demo}や\citet{japanese}のように引用されます．
-    \begin{itemize}
-        \item PDF上で
-        \item 参考文献を
-        \item クリックすると
-        \item 参考文献一覧に飛びます
-    \end{itemize}
-\end{frame}
-
-\section{まとめ}
-\begin{frame}
-\frametitle{まとめ}
-まとめ
+\texttt{{\textbackslash}cite\{key\}}で\cite{demo}や\cite{japanese}のように引用されます．
 \end{frame}
 
 \begin{frame}[allowframebreaks]
@@ -213,7 +71,7 @@
 \begingroup
 \scriptsize
     \setbeamertemplate{bibliography item}[triangle]
-    \bibliographystyle{j}
+    \bibliographystyle{jecon}
     \bibliography{demo}
 \endgroup
 \end{frame}
