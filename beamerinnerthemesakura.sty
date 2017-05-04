@@ -1,17 +1,62 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerinnerthemesakura}[2017/05/04 Sakura inner theme]
-\defbeamertemplate{section page}{sakura}{%
-  \begin{centering}
-    \usebeamercolor[fg]{section title}
-    \usebeamerfont{section title}
-    \insertsection\par
-  \end{centering}
+\setbeamertemplate{title page}{%
+  \begin{minipage}[b][\paperheight]{\textwidth}
+    \vspace*{\sakura@voffset}
+    \vfill
+    \ifx\inserttitle\@empty\else\usebeamertemplate*{title}\fi
+    \ifx\insertsubtitle\@empty\else\usebeamertemplate*{subtitle}\fi
+    \usebeamertemplate*{title separator}
+    \ifx\insertinstitute\@empty\else\usebeamertemplate*{institute}\fi
+    \ifx\beamer@shortauthor\@empty\else\usebeamertemplate*{author}\fi
+    \ifx\insertdate\@empty\else\usebeamertemplate*{date}\fi
+    \vfill
+    \vspace*{\sakura@voffset}
+  \end{minipage}
 }
-\setbeamertemplate{section page}[sakura]
-\AtBeginSection{%
+\def\maketitle{%
   \ifbeamer@inframe
-    \sectionpage
+    \titlepage
   \else
-    \frame[plain,c,noframenumbering]{\sectionpage}
+    \frame[plain,noframenumbering]{\titlepage}
   \fi
 }
+\def\titlepage{%
+  \usebeamertemplate{title page}
+}
+\setbeamertemplate{title}{%
+  \centering
+  \linespread{1.0}%
+  \inserttitle%
+  \par%
+  \vspace*{2ex}
+}
+\setbeamertemplate{subtitle}{%
+  \centering
+  \insertsubtitle%
+  \par%
+  \vspace*{1ex}
+}
+\setbeamertemplate{title separator}{%
+  \vspace*{22mm}
+  \par%
+}
+\setbeamertemplate{author}{%
+  \centering
+  \vspace*{1ex}
+  \insertauthor%
+  \par%
+  \vspace*{1ex}
+}
+\setbeamertemplate{date}{%
+  \centering
+  \insertdate%
+  \par%
+}
+\setbeamertemplate{institute}{%
+  \centering
+  \insertinstitute%
+  \par%
+}
+\newlength{\sakura@voffset}
+\setlength{\sakura@voffset}{12mm}
