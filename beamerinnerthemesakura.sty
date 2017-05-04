@@ -1,0 +1,17 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerinnerthemesakura}[2017/05/04 Sakura inner theme]
+\defbeamertemplate{section page}{sakura}{%
+  \begin{centering}
+    \usebeamercolor[fg]{section title}
+    \usebeamerfont{section title}
+    \insertsection\par
+  \end{centering}
+}
+\setbeamertemplate{section page}[sakura]
+\AtBeginSection{%
+  \ifbeamer@inframe
+    \sectionpage
+  \else
+    \frame[plain,c,noframenumbering]{\sectionpage}
+  \fi
+}
