@@ -1,5 +1,10 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerouterthemesakura}[2016/06/09 Sakura outer theme]
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{frame numbering}{}{%
-\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{footline}{%
+  \begin{beamercolorbox}[wd=\textwidth,sep=3ex]{footline}%
+    \usebeamerfont{page number in head/foot}%
+    \hfill%
+    \insertframenumber\,/\,\inserttotalframenumber%
+  \end{beamercolorbox}%
+}

@@ -28,7 +28,7 @@
 \let\eachwordthree=\sffamily
 \begin{document}
 
-\begin{frame}
+\begin{frame}[noframenumbering,plain]
     \nocite{demo}
     \maketitle
 \end{frame}
@@ -40,9 +40,9 @@
     \begin{exe}
         \ex%
         \glll%
-        {憎悪} {の} {炎} {が} {燃え上がった} \\
-        {zouo} {no} {honoo} {ga} {moeagatta} \\
-        {hatred} {\textsc{gen}} {flame} {\textsc{nom}} {burn\_up-\textsc{pst}} \\
+        {憎悪の} {炎が} {燃え上がった} \\
+        {\textit{zouo-no}} {\textit{honoo-ga}} {\textit{moeagatta}} \\
+        {hatred-\textsc{gen}} {flame-\textsc{nom}} {burn\_up-\textsc{pst}} \\
         \trans%
         ``The flame of hatred burned up.''
     \end{exe}
@@ -63,18 +63,15 @@
 
 \begin{frame}
 \frametitle{日本語で書かれた参考文献の引用}
-\texttt{{\textbackslash}cite\{key\}}で\cite{demo}や\cite{japanese}のように引用されます．
+\texttt{{\textbackslash}cite\{key\}}で\cite{demo}のように引用されます．
 \end{frame}
 
-\section{参考文献}
-\begin{frame}[allowframebreaks]
-\frametitle{参考文献}
-\begingroup
-\scriptsize
-    \setbeamertemplate{bibliography item}[triangle]
-    \bibliographystyle{jecon}
-    \bibliography{demo}
-\endgroup
+\section{Bibliography}
+\begin{frame}[plain,noframenumbering,allowframebreaks]
+\frametitle{Bibliography}
+\footnotesize
+\bibliographystyle{apalike}
+\bibliography{demo}
 \end{frame}
 
 \end{document}
