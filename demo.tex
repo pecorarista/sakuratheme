@@ -2,18 +2,24 @@
 \usepackage[sort]{natbib}
 \usepackage{framed}
 \usepackage{ccicons}
-\usepackage[no-math]{fontspec}
 \usepackage{luatexja-ruby}
 \usepackage{appendixnumberbeamer}
+\usetheme{sakura}
 \ltjsetparameter{%
     jacharrange={%
         -2, % Exclude Greek and Cyrillic letters.
         -3  % Punctuations and Miscellaneous symbols.
     },
     alxspmode={`/,allow},
-    alxspmode={`#,allow}
+    alxspmode={`#,allow},
+    alxspmode={92,allow}
 }
-\usetheme{sakura}
+\usepackage{fontawesome}
+\iffontsavailable{HiraMaruPro-W4}{%
+    \newjfontfamily\jtexttt{HiraMaruPro-W4}
+}{%
+    \newjfontfamily\jtexttt{some Japanese font}
+}
 %https://tex.stackexchange.com/questions/24136/natbib-and-hyperref-for-author-year-style-produces-two-links/27235
 \usepackage{etoolbox}
 \usepackage{appendixnumberbeamer}
@@ -60,14 +66,13 @@
 {\endMakeFramed}
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
-\title{beamerで言語学関連のスライドを作る}
+\title{beamerで言語学のスライドを作る}
 % \subtitle{副題}
 \institute{総合研究大学院大学}
 \author{宮澤 彬}
 \date{{\number\year}年{\number\month}月{\number\day}日}
 \hypersetup{%
     unicode,
-    backref,
     colorlinks,
     allcolors=sDarkBlue
 }
@@ -85,22 +90,42 @@
 \begin{frame}
 \setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
 \frametitle{グロス}
-    \begin{exe}
-        \ex%
-        \glll%
-        {これは} {ロシア語の} {教科書} {です} \\
-        {\textit{kore-wa}} {\textit{rosia-go-no}} {\textit{kyōkašo}} {desu} \\
-        {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
-        \trans%
-        ``This is a textbook of the Russian language''
-        \ex%
-        \glll%
-        {Это} {учебник} {русского} {языка} \\
-        {\textit{eto}} {\textit{uč'ebn'ik}} {\textit{rússkovo}} {jazyká} \\
-        {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
-        \trans%
-        ``This is a textbook of the Russian language.''
-    \end{exe}
+\texttt{gb4e}と\texttt{cgloss4e}パッケージを使います．
+
+\begin{exe}
+    \ex%
+    \glll%
+    {これは} {ロシア語の} {教科書} {です} \\
+    {\textit{kore-wa}} {\textit{rosia-go-no}} {\textit{kyōkašo}} {desu} \\
+    {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
+    \trans%
+    ``This is a textbook of the Russian language''
+    \ex%
+    \glll%
+    {Это} {учебник} {русского} {языка} \\
+    {\textit{eto}} {\textit{uč'ébn'ik}} {\textit{rússkovo}} {jazyká} \\
+    {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
+    \trans%
+    ``This is a textbook of the Russian language.''
+\end{exe}
+\end{frame}
+
+\begin{frame}
+    \frametitle{音声記号}
+    Fira Sansフォントは多くの文字を含んでおり，またLua\LaTeX はユニコードによる入力に対応しているため，そのまま打ち込むだけで音声記号が表示されます．
+
+    \smallskip
+
+    （例）\textbf{медуза} [mʲɪˈduzə] くらげ
+
+    \bigskip
+
+    入力には以下を用いると便利です．
+    \begin{itemize}
+        \item Windows → \faGithub\ \href{https://github.com/samhocevar/wincompose}{\texttt{samhocevar/wincompose}}
+        \item macOS → \faGithub\ \href{https://github.com/gnarf/osx-compose-key}{\texttt{gnarf/osx-compose-key}}
+        \item Linux → 標準のCompose Key
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -138,7 +163,7 @@
 \end{frame}
 
 \begin{frame}[plain,noframenumbering,allowframebreaks]
-\frametitle{Bibliography}
+\frametitle{参考文献}
 \footnotesize
 \bibliographystyle{apalike}
 \bibliography{demo}
@@ -156,7 +181,7 @@
             行頭の余白が大きい
         \item \leavevmode\inhibitglue 「こんてちあ」
 
-            \texttt{\textbackslash item \textbackslash leavevmode \textbackslash inhibitglue} で余白を調整
+            \texttt{\textbackslash item \textbackslash leavevmode\textbackslash inhibitglue} で余白を調整
     \end{itemize}
 
     \bigskip
