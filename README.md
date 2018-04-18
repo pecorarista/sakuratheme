@@ -4,7 +4,7 @@ Sakura theme
 これは主に日本語を対象とした beamer のテンプレートです．  
 [mtheme](https://github.com/matze/mtheme) を元に作成しています．
 
-![screenshot-gloss.png]
+![スクリーンショット](screenshot-gloss.png)
 
 ## Requirements
 
