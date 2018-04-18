@@ -17,10 +17,14 @@
     \newjfontfamily\jtexttt{some Japanese font}
 }
 \usepackage[sort]{natbib}
+\defcitealias{poetics}{アリストテレス「詩学」1457b}
+\defcitealias{ginga}{宮澤賢治「銀河鉄道の夜」九 ジョバンニの切符}
 \usepackage{appendixnumberbeamer}
 \usepackage{ccicons}
 \usepackage{framed}
+\usepackage[hang,flushmargin]{footmisc}
 \usepackage{listings}
+\newfontfamily\timesnrmtpro{Times New Roman}
 %https://tex.stackexchange.com/questions/24136/natbib-and-hyperref-for-author-year-style-produces-two-links/27235
 \usepackage{etoolbox}
 \usepackage{appendixnumberbeamer}
@@ -86,7 +90,89 @@
     \maketitle
 \end{frame}
 
-\section{言語学関連}
+\begin{frame}
+    \frametitle{はじめに}
+    このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}
+    のデモとして作ったものです．
+
+    \bigskip
+
+    そのため作り方を詳しく説明することはしませんが，
+    コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{グロスI}
+\href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}パッケージを利用します．
+
+\bigskip
+
+表示の不具合を防ぐため
+    \texttt{cgloss4e.sty}を作業ディレクトリにコピーし\footnote[frame]{%
+インストールされている場所がわからない場合はCTANからダウンロードしてください．
+}，以下のように変更します．
+\begin{leftbar}
+\begin{lstlisting}[%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily\scriptsize,
+    % asterisk for highlight backslash
+    texcsstyle=*\color{sRed}\bfseries,
+    keywordstyle=\bfseries,
+    moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree},
+    commentstyle=\color{sDarkBlue}
+]
+- \@ifundefined{eachwordone}{\let\eachwordone=\rm}{\relax}
++ \@ifundefined{eachwordone}{\let\eachwordone=\relax}{\relax}
+
+- \@ifundefined{eachwortwo}{\let\eachwordtwo=\rm}{\relax}
++ \@ifundefined{eachwortwo}{\let\eachwordtwo=\itshape}{\relax}
+
+- \@ifundefined{eachworthree}{\let\eachwordthree=\rm}{\relax}
++ \@ifundefined{eachworthree}{\let\eachwordthree=\relax}{\relax}
+\end{lstlisting}
+\end{leftbar}
+\end{frame}
+
+\begin{frame}[fragile]
+\setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
+\frametitle{グロスII}
+余白が狭く感じる場合は以下のように調整を行うとよいです．
+\begin{leftbar}
+\begin{lstlisting}[%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily\footnotesize,
+    % asterisk for highlight backslash
+    texcsstyle=*\color{sRed}\bfseries,
+    keywordstyle=\bfseries,
+    moretexcs={setlength,glossglue},
+    morekeywords={plus,minus},
+    commentstyle=\color{sDarkBlue}
+]
+\setlength{\glossglue}{5pt plus 2pt minus 1pt}
+\end{lstlisting}
+\end{leftbar}
+
+結果はこのようになります．
+\begin{exe}
+    \ex%
+    \glll%
+    {これは} {ロシア語の} {教科書} {です} \\
+    {kore-wa} {rosia-go-no} {kyōkašo} {desu} \\
+    {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
+    \trans%
+    ``This is a textbook of the Russian language''
+    \ex%
+    \glll%
+    {Это} {учебник} {русского} {языка} \\
+    % {Э'то} {уче'бник} {ру'сского} {языка'} \\
+    {èto} {učebnik} {russkovo} {jazyka} \\
+    {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
+    \trans%
+    ``This is a textbook of the Russian language.''
+\end{exe}
+\end{frame}
+
+
 \begin{frame}[fragile]
 \frametitle{ギリシャ文字やキリル文字を使うときの注意点}
 Lua\TeX{}-jaパッケージを読み込んだときに注意しなければならないのが，
@@ -96,7 +182,7 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 % https://tex.stackexchange.com/questions/17774/listings-package-can-i-include-a-backslash-in-language-keyword-begin-for
 \begin{lstlisting}[%
     language={[LaTeX]TeX},
-    basicstyle=\ttfamily,
+    basicstyle=\ttfamily\footnotesize,
     % asterisk for highlight backslash
     texcsstyle=*\color{sRed}\bfseries,
     keywordstyle=\bfseries,
@@ -106,48 +192,12 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 ]
 \ltjsetparameter{%
   jacharrange={%
-    % Exclude Greek and Cyrillic letters
-    -2,
-    % Exclude Punctuations and Misc symbols
-    -3
+    -2,  % Exclude Greek and Cyrillic letters
+    -3   % Exclude Punctuations and Misc symbols
   }
 }
 \end{lstlisting}
 \end{leftbar}
-\end{frame}
-
-\begin{frame}
-\frametitle{あ}
-    \begin{quoteblock}{\itshape
-ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.}
-
-\hfill アリストテレス「詩学」1457b
-    \end{quoteblock}
-\end{frame}
-
-\subsection{例文と対訳}
-\begin{frame}
-\setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
-\frametitle{グロス}
-\texttt{gb4e}と\texttt{cgloss4e}パッケージを使います．
-
-\begin{exe}
-    \ex%
-    \glll%
-    {これは} {ロシア語の} {教科書} {です} \\
-    {\textit{kore-wa}} {\textit{rosia-go-no}} {\textit{kyōkašo}} {desu} \\
-    {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
-    \trans%
-    ``This is a textbook of the Russian language''
-    \ex%
-    \glll%
-    {Это} {учебник} {русского} {языка} \\
-    % {Э'то} {уче'бник} {ру'сского} {языка'} \\
-    {\textit{èto}} {\textit{učebnik}} {\textit{russkovo}} {jazyka} \\
-    {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
-    \trans%
-    ``This is a textbook of the Russian language.''
-\end{exe}
 \end{frame}
 
 \begin{frame}
@@ -185,6 +235,14 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 
 \begin{frame}
     \frametitle{長め文章の引用}
+    \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージのleftbar環境を使うと引用であることが分かりやすくなります．
+
+    \begin{quoteblock}
+ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
+
+\hfill \citetalias{poetics}
+    \end{quoteblock}
+
     \begin{quoteblock}
         「あの森\ruby{琴}{ライラ}の宿でせう。
         あたしきつとあの森の中には、
@@ -192,14 +250,8 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
         まはりには青い孔雀やなんかたくさんゐると思ふわ。」
         女の子が答へました。
 
-        \hfill 宮澤賢治「銀河鉄道の夜」
+        \hfill \citetalias{ginga}
     \end{quoteblock}
-\end{frame}
-
-\begin{frame}
-\frametitle{参考文献の引用}
-\texttt{{\textbackslash}citet\{key\}}で\citet{demo}のように地の文と同様の形式(textual)で引用されます．
-一方\texttt{{\textbackslash}citep\{key\}}とすると丸括弧に入った形式(parenthetical)で引用されます\citep{demo}．
 \end{frame}
 
 \begin{frame}[plain,noframenumbering,allowframebreaks]
