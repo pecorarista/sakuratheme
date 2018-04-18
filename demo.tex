@@ -1,10 +1,6 @@
 \documentclass[12pt]{beamer}
-\usepackage[sort]{natbib}
-\usepackage{framed}
-\usepackage{ccicons}
-\usepackage{luatexja-ruby}
-\usepackage{appendixnumberbeamer}
 \usetheme{sakura}
+\usepackage{luatexja-ruby}
 \ltjsetparameter{%
     jacharrange={%
         -2, % Exclude Greek and Cyrillic letters.
@@ -20,6 +16,11 @@
 }{%
     \newjfontfamily\jtexttt{some Japanese font}
 }
+\usepackage[sort]{natbib}
+\usepackage{appendixnumberbeamer}
+\usepackage{ccicons}
+\usepackage{framed}
+\usepackage{listings}
 %https://tex.stackexchange.com/questions/24136/natbib-and-hyperref-for-author-year-style-produces-two-links/27235
 \usepackage{etoolbox}
 \usepackage{appendixnumberbeamer}
@@ -66,7 +67,7 @@
 {\endMakeFramed}
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
-\title{beamerで言語学のスライドを作る}
+\title{Lua\TeX{}-jaとbeamerで言語学関連のスライドを作る}
 % \subtitle{副題}
 \institute{総合研究大学院大学}
 \author{宮澤 彬}
@@ -86,6 +87,44 @@
 \end{frame}
 
 \section{言語学関連}
+\begin{frame}[fragile]
+\frametitle{ギリシャ文字やキリル文字を使うときの注意点}
+Lua\TeX{}-jaパッケージを読み込んだときに注意しなければならないのが，
+ギリシャ文字やキリル文字を和文フォントが表示されることです．
+プリアンブルに以下を追加して欧文フォントで表示されるようにしましょう．
+\begin{leftbar}
+% https://tex.stackexchange.com/questions/17774/listings-package-can-i-include-a-backslash-in-language-keyword-begin-for
+\begin{lstlisting}[%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily,
+    % asterisk for highlight backslash
+    texcsstyle=*\color{sRed}\bfseries,
+    keywordstyle=\bfseries,
+    moretexcs={ltjsetparameter},
+    morekeywords={jacharrange},
+    commentstyle=\color{sDarkBlue}
+]
+\ltjsetparameter{%
+  jacharrange={%
+    % Exclude Greek and Cyrillic letters
+    -2,
+    % Exclude Punctuations and Misc symbols
+    -3
+  }
+}
+\end{lstlisting}
+\end{leftbar}
+\end{frame}
+
+\begin{frame}
+\frametitle{あ}
+    \begin{quoteblock}{\itshape
+ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.}
+
+\hfill アリストテレス「詩学」1457b
+    \end{quoteblock}
+\end{frame}
+
 \subsection{例文と対訳}
 \begin{frame}
 \setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
@@ -103,7 +142,8 @@
     \ex%
     \glll%
     {Это} {учебник} {русского} {языка} \\
-    {\textit{eto}} {\textit{uč'ébn'ik}} {\textit{rússkovo}} {jazyká} \\
+    % {Э'то} {уче'бник} {ру'сского} {языка'} \\
+    {\textit{èto}} {\textit{učebnik}} {\textit{russkovo}} {jazyka} \\
     {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
     \trans%
     ``This is a textbook of the Russian language.''
