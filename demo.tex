@@ -1,4 +1,4 @@
-\documentclass[12pt]{beamer}
+\documentclass[12pt,unicode]{beamer}
 \usetheme{sakura}
 \usepackage{luatexja-ruby}
 \ltjsetparameter{%
@@ -17,8 +17,8 @@
     \newjfontfamily\jtexttt{some Japanese font}
 }
 \usepackage[sort]{natbib}
-\defcitealias{poetics}{アリストテレス「詩学」1457b}
-\defcitealias{ginga}{宮澤賢治「銀河鉄道の夜」九 ジョバンニの切符}
+\defcitealias{poetics}{アリストテレス『詩学』1457b}
+\defcitealias{ginga}{宮澤賢治『銀河鉄道の夜』九 ジョバンニの切符}
 \usepackage{appendixnumberbeamer}
 \usepackage{ccicons}
 \usepackage{framed}
@@ -77,7 +77,6 @@
 \author{宮澤 彬}
 \date{{\number\year}年{\number\month}月{\number\day}日}
 \hypersetup{%
-    unicode,
     colorlinks,
     allcolors=sDarkBlue
 }
@@ -90,6 +89,7 @@
     \maketitle
 \end{frame}
 
+\section{はじめに}
 \begin{frame}
     \frametitle{はじめに}
     このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}
@@ -101,6 +101,7 @@
     コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
 \end{frame}
 
+\section{使用例}
 \begin{frame}[fragile]
 \frametitle{グロスI}
 \href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}パッケージを利用します．
@@ -165,8 +166,8 @@
     \glll%
     {Это} {учебник} {русского} {языка} \\
     % {Э'то} {уче'бник} {ру'сского} {языка'} \\
-    {èto} {učebnik} {russkovo} {jazyka} \\
-    {this} {textbook-\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
+    {èto} {učebnik} {russk-ovo} {jazyk-a} \\
+    {this} {textbook.\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
     \trans%
     ``This is a textbook of the Russian language.''
 \end{exe}
@@ -257,7 +258,7 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 \begin{frame}[plain,noframenumbering,allowframebreaks]
 \frametitle{参考文献}
 \footnotesize
-\bibliographystyle{apalike}
+\bibliographystyle{jecon}
 \bibliography{demo}
 \end{frame}
 
