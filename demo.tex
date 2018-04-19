@@ -81,10 +81,10 @@
     colorlinks,
     allcolors=sDarkBlue
 }
-\newcommand\eachwordone{\relax}
-\newcommand\eachwordtwo{\itshape}
-\newcommand\eachwordthree{\relax}
 \usepackage{gb4e,cgloss4e}
+\renewcommand\eachwordone{\relax}
+\renewcommand\eachwordtwo{\itshape}
+\renewcommand\eachwordthree{\relax}
 \noautomath%
 \begin{document}
 
@@ -128,11 +128,12 @@
     moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree},
     commentstyle=\color{sDarkBlue}
 ]
-\newcommand\eachwordone{\relax}
-\newcommand\eachwordtwo{\itshape}
-\newcommand\eachwordthree{\relax}
 \usepackage{gb4e,cgloss4e}
-% Disable ^ and _ outside mathmode
+\renewcommand\eachwordone{\relax}
+\renewcommand\eachwordtwo{\itshape}
+\renewcommand\eachwordthree{\relax}
+% Disable subscript and superscript
+% outside mathmode to avoid conflict
 \noautomath
 \end{lstlisting}
 \end{leftbar}
