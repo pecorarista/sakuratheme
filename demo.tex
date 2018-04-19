@@ -11,11 +11,6 @@
     alxspmode={92,allow}
 }
 \usepackage{fontawesome}
-\iffontsavailable{HiraMaruPro-W4}{%
-    \newjfontfamily\jtexttt{HiraMaruPro-W4}
-}{%
-    \newjfontfamily\jtexttt{some Japanese font}
-}
 \usepackage[sort]{natbib}
 \defcitealias{poetics}{アリストテレス『詩学』1457b}
 \defcitealias{ginga}{宮澤賢治『銀河鉄道の夜』九 ジョバンニの切符}
@@ -24,7 +19,6 @@
 \usepackage{framed}
 \usepackage[hang,flushmargin]{footmisc}
 \usepackage{listings}
-\newfontfamily\timesnrmtpro{Times New Roman}
 %https://tex.stackexchange.com/questions/24136/natbib-and-hyperref-for-author-year-style-produces-two-links/27235
 \usepackage{etoolbox}
 \usepackage{appendixnumberbeamer}
@@ -85,7 +79,6 @@
 \begin{document}
 
 \begin{frame}[noframenumbering,plain]
-    \nocite{demo}
     \maketitle
 \end{frame}
 
@@ -99,9 +92,15 @@
 
     そのため作り方を詳しく説明することはしませんが，
     コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
+    \bigskip
+
+    また言語学関連の話題の\LaTeX における扱い方を網羅的に知りたい方は
+    \href{https://www1.essex.ac.uk/linguistics/external/clmt/latex4ling/}
+    {LaTeX for Linguists}が参考になります．
 \end{frame}
 
 \section{使用例}
+\subsection{グロス}
 \begin{frame}[fragile]
 \frametitle{グロスI}
 \href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}パッケージを利用します．
@@ -201,6 +200,7 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 \end{leftbar}
 \end{frame}
 
+\subsection{音声記号}
 \begin{frame}
     \frametitle{音声記号}
     Fira Sansフォントは多くの文字を含んでおり，またLua\LaTeX はユニコードによる入力に対応しているため，そのまま打ち込むだけで音声記号が表示されます．
@@ -219,6 +219,7 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
     \end{itemize}
 \end{frame}
 
+\subsection{その他}
 \begin{frame}
     \frametitle{画像の引用}
     画像の挿入には\texttt{\textbackslash includegraphics}コマンドを使います．
