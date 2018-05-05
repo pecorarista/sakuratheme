@@ -14,6 +14,21 @@
     alxspmode={`#,allow},
     alxspmode={92,allow}
 }
+\usepackage{arabluatex}
+\newfontfamily\arabicfont[%
+    Script=Arabic,     % enable ligatures
+    RawFeature={%
+        +anum,         % use eastern arabic numerals
+        +ss05}         % put kasrah below shadda
+]{Fira GO Light}
+\newfontfamily\translitfont[
+    ItalicFont={Fira Sans Light Italic},%
+    BoldFont={Fira Sans},%
+    BoldItalicFont={Fira Sans Italic}
+]{Fira Sans Light}%
+\SetTranslitFont{\translitfont}
+\SetTranslitStyle{\itshape}  % \upshape, \itshape
+\SetTranslitConvention{arabica}  % dmg, loc, arabica
 \usepackage{fontawesome}
 \usepackage[sort]{natbib}
 \defcitealias{poetics}{アリストテレス『詩学』1457b}
@@ -125,7 +140,7 @@
     % asterisk for highlight backslash
     texcsstyle=*\color{sRed}\bfseries,
     keywordstyle=\bfseries,
-    moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree},
+    moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree,noautomath},
     commentstyle=\color{sDarkBlue}
 ]
 \usepackage{gb4e,cgloss4e}
@@ -204,6 +219,71 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 }
 \end{lstlisting}
 \end{leftbar}
+\end{frame}
+
+\subsection{アラビア文字}
+\begin{frame}[fragile]
+\frametitle{アラビア文字I}
+    もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{\textbf{arabluatex}}を利用します．
+    \href{https://bboxtype.com/typefaces/FiraGO/}{\textbf{Fira GO}}フォントは\href{https://bboxtype.com/typefaces/FiraSans/}{\textbf{Fira Sans}}の拡張であり，アラビア文字以外にも多くの文字種を含んでいます．
+
+\begin{leftbar}
+\begin{lstlisting}[%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily\footnotesize,
+    % asterisk for highlight backslash
+    texcsstyle=*\color{sRed}\bfseries,
+    keywordstyle=\bfseries,
+    moretexcs={ltjsetparameter,arabicfont,newfontfamily,SetTranslitStyle,SetTranslitConvention},
+    morekeywords={},
+    commentstyle=\color{sDarkBlue}
+]
+\usepackage{arabluatex}
+\newfontfamily\arabicfont[%
+  Script=Arabic, % enable ligatures
+  RawFeature={%
+    +anum, % use eastern arabic numerals
+    +ss05} % put kasrah below shadda
+]{Fira GO}
+\SetTranslitStyle{\itshape} % \upshape, \itshape
+\SetTranslitConvention{arabica} % dmg, loc, arabica
+\end{lstlisting}
+\end{leftbar}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{アラビア文字II}
+ラテン文字で入力できるのでRTL（右から左への横書き）や合字に対応していないエディタでも編集できます．
+転写の方法は\texttt{dmg, arabica, loc}の3種類から選べます．
+
+\begin{leftbar}
+\begin{lstlisting}[%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily\footnotesize,
+    % asterisk for highlight backslash
+    texcsstyle=*\color{sRed}\bfseries,
+    keywordstyle=\bfseries,
+    moretexcs={arb},
+    morekeywords={arab},
+    commentstyle=\color{sDarkBlue}
+]
+\begin{arab}[fullvoc]
+    'anta tatakallamu 'l-lu.gaTa
+    'l-`arabiyyaTa jayyidaN!
+\end{arab}
+\arb[trans]{'anta tatakallamu
+            'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
+\end{lstlisting}
+\end{leftbar}
+
+\begin{arab}[fullvoc]
+    'anta tatakallamu 'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!
+\end{arab}
+
+\bigskip
+
+\arb[trans]{'anta tatakallamu
+            'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
 \end{frame}
 
 \subsection{音声記号}
