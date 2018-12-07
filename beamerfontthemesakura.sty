@@ -80,11 +80,11 @@
     }
   }
 
-  \RequirePackage[scale=0.9]{luatexja-fontspec}
+  \RequirePackage[scale=0.9,match]{luatexja-fontspec}
   \RequirePackage{luatexja-otf}
   \iffontsavailable{Hiragino Kaku Gothic Pro}{%
-    \setmainjfont[BoldFont={HiraKakuPro-W6}]{HiraKakuPro-W3}
     \setsansjfont[BoldFont={HiraKakuPro-W6}]{HiraKakuPro-W3}
+    \setmonojfont{HiraMaruPro-W4}
   }{%
     \RequirePackage[ipa,expert]{luatexja-preset}
   }
