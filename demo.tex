@@ -29,6 +29,8 @@
 \SetTranslitFont{\translitfont}
 \SetTranslitStyle{\itshape}  % \upshape, \itshape
 \SetTranslitConvention{arabica}  % dmg, loc, arabica
+\usepackage{tikz-dependency}
+\usetikzlibrary{automata,positioning,arrows,calc}
 \usepackage{fontawesome}
 \usepackage[sort]{natbib}
 \defcitealias{poetics}{アリストテレス『詩学』1457b}
@@ -342,14 +344,6 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
     \end{quoteblock}
 \end{frame}
 
-\begin{frame}[plain,noframenumbering,allowframebreaks]
-\frametitle{参考文献}
-\footnotesize
-\bibliographystyle{jecon}
-\bibliography{demo}
-\end{frame}
-
-\appendix
 \begin{frame}
     \footnotesize
     \frametitle{\appendixname}
@@ -369,5 +363,12 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
     参照：\href{http://doratex.hatenablog.jp/entry/20140714/1405302796}{TeX Live 2014のpTeX系列における\textbackslash inhibitglueの仕様変更}
 \end{frame}
 
+
+\begin{frame}[plain,noframenumbering,allowframebreaks]
+    \frametitle{参考文献}
+    \footnotesize
+    \bibliographystyle{jecon}
+    \bibliography{demo}
+\end{frame}
 
 \end{document}
