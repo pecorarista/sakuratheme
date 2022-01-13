@@ -8,7 +8,7 @@ Sakura theme
 
 ## Requirements
 
-+ [TeX Live 2016 or later](https://www.tug.org/texlive/)
++ [TeX Live 2021 or later](https://www.tug.org/texlive/)
 + [jecon.bst](https://github.com/ShiroTakeda/jecon-bst)
 
 ## Example
