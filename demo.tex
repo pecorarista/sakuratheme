@@ -42,7 +42,8 @@
 \newref{fig}
 \setrefstyle{fig}{prefix=図}
 \newref{math}
-\setrefstyle{math}{prefix=式}
+\renewcommand{\theequation}{\arabic{equation}}
+\setrefstyle{math}{refcmd=(\ref{#1})}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
 \usetikzlibrary{automata,positioning,arrows,calc}
@@ -118,6 +119,7 @@
         \begin{align}
             \sigma(\mu) = \frac{1}{1 + \exponential(-\mu)} \mathlabel{sigmoid}
         \end{align}
+        数式を参照することもできます\mathref{sigmoid}．
     \end{frame}
 
     \begin{frame}[fragile]
