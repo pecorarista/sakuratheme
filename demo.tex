@@ -29,6 +29,16 @@
 \SetTranslitFont{\translitfont}
 \SetTranslitStyle{\itshape}  % \upshape, \itshape
 \SetTranslitConvention{arabica}  % dmg, loc, arabica
+% BEGIN 参照関連
+\usepackage{subcaption}
+\usepackage{wtref}
+\newref{fig}
+\setrefstyle{fig}{prefix=図}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{図}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{：}
+% END 参照関連
 \usepackage{tikz-dependency}
 \usetikzlibrary{automata,positioning,arrows,calc}
 \usepackage{fontawesome}
@@ -342,6 +352,41 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
 
         \hfill \citetalias{ginga}
     \end{quoteblock}
+\end{frame}
+
+\begin{frame}
+    \frametitle{係り受け解析}
+    \begin{figure}
+        \begin{subfigure}[t]{0.38\textwidth}
+            \centering
+            \scalebox{.9}{%
+                \begin{dependency}[hide label]
+                    \begin{deptext}[column sep=2\zw]
+                        兵庫を \& 訪れた。 \\
+                    \end{deptext}
+                    \depedge{2}{1}{目的語}
+                \end{dependency}
+            }
+            \caption{文節単位・ラベルなし}\figlabel{without-label}
+        \end{subfigure}
+        \begin{subfigure}[t]{0.6\textwidth}
+            \centering
+            \scalebox{.9}{%
+                \begin{dependency}[text only label,label style={above}]
+                    \begin{deptext}[column sep=2\zw]
+                        兵庫  \& を  \& 訪れ \& た。 \\
+                        {\scriptsize 固有名詞} \& {\scriptsize 接置詞} \& {\scriptsize 動詞} \& {\scriptsize 助動詞} \\
+                    \end{deptext}
+                    \depedge{1}{2}{格表示}
+                    \depedge{3}{1}{目的語}
+                    \depedge{3}{4}{助動詞}
+                \end{dependency}
+            }
+            \caption{単語単位・ラベルあり}\figlabel{with-label}
+        \end{subfigure}
+        \caption{文「兵庫を訪れた。」を係り受け解析し、図示したもの。}
+    \end{figure}
+    \figref{without-label}と\figref{with-label}を参照する。
 \end{frame}
 
 \begin{frame}
