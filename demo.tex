@@ -1,10 +1,7 @@
-\documentclass[
-    12pt,
-    % noamssymb,
-    unicode]{beamer}
-\usepackage{etex}
+\documentclass[%
+    hyperref={colorlinks,linkcolor=sDarkBlue,urlcolor=sDarkBlue,citecolor=sDarkBlue}
+]{beamer}
 \usetheme{sakura}
-\usepackage{luatexja-ruby}
 \ltjsetparameter{%
     jacharrange={%
         -2, % Exclude Greek and Cyrillic letters.
@@ -14,6 +11,7 @@
     alxspmode={`#,allow},
     alxspmode={92,allow}
 }
+\usepackage{luatexja-ruby}
 \usepackage{arabluatex}
 \newfontfamily\arabicfont[%
     Script=Arabic,     % enable ligatures
@@ -21,75 +19,37 @@
         +anum,         % use eastern arabic numerals
         +ss05}         % put kasrah below shadda
 ]{Fira GO Light}
-\newfontfamily\translitfont[
-    ItalicFont={Fira Sans Light Italic},%
-    BoldFont={Fira Sans},%
-    BoldItalicFont={Fira Sans Italic}
-]{Fira Sans Light}%
+\newfontfamily\translitfont[Ligatures=TeX]{TeX Gyre Termes}
 \SetTranslitFont{\translitfont}
 \SetTranslitStyle{\itshape}  % \upshape, \itshape
-\SetTranslitConvention{arabica}  % dmg, loc, arabica
-% BEGIN 参照関連
+\SetTranslitConvention{dmg}  % dmg, loc, arabica
+\usepackage{breakurl}
+\usepackage{booktabs}
+\usepackage{ccicons}
+\usepackage{bxghost}
 \usepackage{subcaption}
+\usepackage{fontawesome}
+\usepackage{amsmath,amssymb}
+\usepackage{framed}
+\usepackage{listings}
+\usepackage[sort]{natbib}
+\usepackage{tikz-dependency}
 \usepackage{wtref}
-\newref{fig}
-\setrefstyle{fig}{prefix=図}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{図}
+\newref{tab}
+\setrefstyle{tab}{prefix=表}
+\newref{fig}
+\setrefstyle{fig}{prefix=図}
+\newref{math}
+\setrefstyle{math}{prefix=式}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
-% END 参照関連
-\usepackage{tikz-dependency}
 \usetikzlibrary{automata,positioning,arrows,calc}
-\usepackage{fontawesome}
-\usepackage[sort]{natbib}
 \defcitealias{poetics}{アリストテレス『詩学』1457b}
 \defcitealias{ginga}{宮澤賢治『銀河鉄道の夜』九 ジョバンニの切符}
-\usepackage{appendixnumberbeamer}
-\usepackage{ccicons}
-\usepackage{framed}
-\usepackage[hang,flushmargin]{footmisc}
-\usepackage{listings}
-% \usefonttheme{professionalfonts}
-% \setmainfont{Times LT Pro}
-% \usepackage{mtpro2}
-%https://tex.stackexchange.com/questions/24136/natbib-and-hyperref-for-author-year-style-produces-two-links/27235
-\usepackage{etoolbox}
-\usepackage{appendixnumberbeamer}
-
-\makeatletter
-
-\pretocmd{\NAT@citex}{%
-  \let\NAT@hyper@\NAT@hyper@citex
-  \def\NAT@postnote{#2}%
-  \setcounter{NAT@total@cites}{0}%
-  \setcounter{NAT@count@cites}{0}%
-  \forcsvlist{\stepcounter{NAT@total@cites}\@gobble}{#3}}{}{}
-\newcounter{NAT@total@cites}
-\newcounter{NAT@count@cites}
-\def\NAT@postnote{}
-
-% include postnote and \citet closing bracket in hyperlink
-\def\NAT@hyper@citex#1{%
-  \stepcounter{NAT@count@cites}%
-  \hyper@natlinkstart{\@citeb\@extra@b@citeb}#1%
-  \ifnumequal{\value{NAT@count@cites}}{\value{NAT@total@cites}}
-    {\ifNAT@swa\else\if*\NAT@postnote*\else%
-     \NAT@cmt\NAT@postnote\global\def\NAT@postnote{}\fi\fi}{}%
-  \ifNAT@swa\else\if\relax\NAT@date\relax
-  \else\NAT@@close\global\let\NAT@nm\@empty\fi\fi% avoid compact citations
-  \hyper@natlinkend}
-\renewcommand\hyper@natlinkbreak[2]{#1}
-
-% avoid extraneous postnotes, closing brackets
-\patchcmd{\NAT@citex}
-  {\ifNAT@swa\else\if*#2*\else\NAT@cmt#2\fi
-   \if\relax\NAT@date\relax\else\NAT@@close\fi\fi}{}{}{}
-\patchcmd{\NAT@citex}
-  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@close\fi}
-  {\if\relax\NAT@date\relax\NAT@def@citea\else\NAT@def@citea@space\fi}{}{}
-
-\makeatother
+\DeclareMathOperator{\exponential}{exp}
+\newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newenvironment{quoteblock}{%
     \def\FrameCommand{%
         {\color{sLightGray}{\vrule width 3pt}}%
@@ -97,17 +57,19 @@
     }%
     \MakeFramed {\advance\hsize-\width \FrameRestore}}%
 {\endMakeFramed}
+\lstset{%
+    language={[LaTeX]TeX},
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\bfseries,
+    texcsstyle=*\color{sRed}\bfseries,
+    commentstyle=\color{sDarkBlue}
+}
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
-\title{Lua\TeX{}-jaとbeamerで言語学関連のスライドを作る}
-% \subtitle{副題}
-\institute{総合研究大学院大学}
-\author{宮澤 彬}
+\title{Lua\TeX{}-jaとbeamerで研究発表用のスライドを作る}
+\institute{所属}
+\author{著者 太郎}
 \date{{\number\year}年{\number\month}月{\number\day}日}
-\hypersetup{%
-    colorlinks,
-    allcolors=sDarkBlue
-}
 \usepackage{gb4e,cgloss4e}
 \renewcommand\eachwordone{\relax}
 \renewcommand\eachwordtwo{\itshape}
@@ -115,141 +77,166 @@
 \noautomath%
 \begin{document}
 
-\begin{frame}[noframenumbering,plain]
     \maketitle
-\end{frame}
 
-\section{はじめに}
-\begin{frame}
-    \frametitle{はじめに}
-    このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}
-    のデモとして作ったものです．
+    \section{はじめに}
+    \begin{frame}
+        \frametitle{はじめに}
+        このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}のデモとして作ったものです．
 
-    \bigskip
+        \bigskip
 
-    そのため作り方を詳しく説明することはしませんが，
-    コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
-    \bigskip
+        そのため作り方を詳しく説明することはしませんが，
+        コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
+        \bigskip
 
-    また言語学関連の話題の\LaTeX における扱い方を網羅的に知りたい方は
-    \href{https://www1.essex.ac.uk/linguistics/external/clmt/latex4ling/}
-    {LaTeX for Linguists}が参考になります．
-\end{frame}
+        また言語学関連の話題の\LaTeX における扱い方を網羅的に知りたい方は
+        \href{https://www1.essex.ac.uk/linguistics/external/clmt/latex4ling/}
+        {LaTeX for Linguists}が参考になります．
+    \end{frame}
 
-\section{使用例}
-\subsection{グロス}
-\begin{frame}[fragile]
-\frametitle{グロスI}
-\href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}と\href{https://ctan.org/pkg/gb4e}{\texttt{cgloss4e}}パッケージを利用します．
+    \section{基本}
+    \begin{frame}
+        \frametitle{表の挿入}
+        Beamerでは論文などの表のソースコードをほぼそのまま利用できて便利です．
+        \begin{table}
+            \caption{表の例．}\tablabel{tab}
+            \begin{tabular}{rrr}
+                \toprule
+                \header{a} & \header{b} & \header{c} \\
+                \midrule
+                0.123 & 0.28  & 0.32 \\
+                0.234 & 1.25  & 0.45 \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+    \end{frame}
 
-\bigskip
+    \begin{frame}
+        \frametitle{数式}
+        以下で定義される関数$\sigma$を\emph{logistic sigmoid}関数と呼ぶ\citep{prml}．
+        \begin{align}
+            \sigma(\mu) = \frac{1}{1 + \exponential(-\mu)} \mathlabel{sigmoid}
+        \end{align}
+    \end{frame}
 
-1行目に正書法の表記を使い，2行目にイタリックでラテン字転写する場合はプリアンブルに以下のような記述をします．
-\begin{leftbar}
-\begin{lstlisting}[%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily,
-    % asterisk for highlight backslash
-    texcsstyle=*\color{sRed}\bfseries,
-    keywordstyle=\bfseries,
-    moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree,noautomath},
-    commentstyle=\color{sDarkBlue}
-]
+    \begin{frame}[fragile]
+        \frametitle{画像の引用}
+        画像の挿入には\verb+\includegraphics+コマンドを使います．
+        Creative Commonsライセンスの作品には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です．
+        必要に応じて\verb+\href{+\emph{uri}\verb+}{+\emph{text}\verb+}+で元のファイルへリンクを張ります．
+
+        \bigskip
+
+        \begin{figure}
+            \includegraphics[width=0.4\textwidth]{cat.jpg}
+            \caption{\href{https://www.flickr.com/photos/selda_eigler/8687127864/in/photolist-eeDNsC-qWFs4R-7CNDjJ-9c8DxY-eeDNhC-UCZ63T-dJNGUc-e5Nk39-988EVA-kUgwo-owDcVP-jQGjjt-5zkGTy-7WRCUo-b91XbZ-Mj8Ku-5pzwSA-9Bct2H-7CNHMY-7CJJMB-8MyEYn-9x45Mp-7JTq8M-ZrpGJ9-8fRht4-4SxVZT-5pzwjJ-ZsPJjL-aE44GL-dF6uWD-kqbHgM-5F373J-ZsQrVG-qyD7E9-ajyDPL-4WDvTp-KbDSc-5kCxD9-4MdeUo-pgDQcG-pPWrXD-662AFD-oTnC8k-apYceQ-nJSaaY-7CJLZv-7CJJMn-7CNFsU-XNMWkw-ccdtT9}{\emph{Cat} by Selda Eigler} \ccby.}
+        \end{figure}
+
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{長め文章の引用}
+        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージのleftbar環境を使うと引用であることが分かりやすくなります．
+
+        \begin{quoteblock}
+    ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
+
+    \hfill \citetalias{poetics}
+        \end{quoteblock}
+
+        \begin{quoteblock}
+            「あの森\ruby{琴}{ライラ}の宿でせう。
+            あたしきつとあの森の中には、
+            むかしの大きなオーケストラの人たちが集まつていらつしやると思ふわ。
+            まはりには青い孔雀やなんかたくさんゐると思ふわ。」
+            女の子が答へました。
+
+            \hfill \citetalias{ginga}
+        \end{quoteblock}
+    \end{frame}
+
+
+    \section{言語学}
+    \subsection{グロス}
+    \begin{frame}[fragile]
+        \frametitle{グロスI}
+        \href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}と
+        \href{https://ctan.org/pkg/gb4e}{\texttt{cgloss4e}}パッケージを利用します．
+
+        \bigskip
+
+        1行目に正書法の表記を使い，
+        2行目にイタリックでラテン字転写する場合はプリアンブルに以下のような記述をします．
+
+        \begin{leftbar}
+        \begin{lstlisting}[%
+            language={[LaTeX]TeX},
+            % asterisk for highlight backslash
+            moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree,noautomath}
+        ]
 \usepackage{gb4e,cgloss4e}
 \renewcommand\eachwordone{\relax}
 \renewcommand\eachwordtwo{\itshape}
 \renewcommand\eachwordthree{\relax}
-% Disable subscript and superscript
-% outside mathmode to avoid conflict
 \noautomath
-\end{lstlisting}
-\end{leftbar}
-\end{frame}
+        \end{lstlisting}
+        \end{leftbar}
+    \end{frame}
 
-\begin{frame}[fragile]
-\setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
-\frametitle{グロスII}
-余白が狭く感じる場合は以下のように調整を行うとよいです．
-\begin{leftbar}
-\begin{lstlisting}[%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily\footnotesize,
-    % asterisk for highlight backslash
-    texcsstyle=*\color{sRed}\bfseries,
-    keywordstyle=\bfseries,
-    moretexcs={setlength,glossglue},
-    morekeywords={plus,minus},
-    commentstyle=\color{sDarkBlue}
-]
+    \begin{frame}[fragile]
+        \setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
+        \frametitle{グロスII}
+        余白が狭く感じる場合は以下のように調整を行うとよいです．
+        \begin{leftbar}
+        \begin{lstlisting}[%
+            language={[LaTeX]TeX},
+            moretexcs={setlength,glossglue},
+            morekeywords={plus,minus}
+        ]
 \setlength{\glossglue}{5pt plus 2pt minus 1pt}
-\end{lstlisting}
-\end{leftbar}
+        \end{lstlisting}
+    \end{leftbar}
 
-結果はこのようになります．
-\begin{exe}
-    \ex%
-    \glll%
-    {これは} {ロシア語の} {教科書} {です} \\
-    {kore-wa} {rosia-go-no} {kyōkašo} {desu} \\
-    {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
-    \trans%
-    ``This is a textbook of the Russian language''
-    \ex%
-    \glll%
-    {Это} {учебник} {русского} {языка} \\
-    % {Э'то} {уче'бник} {ру'сского} {языка'} \\
-    {èto} {učebnik} {russk-ovo} {jazyk-a} \\
-    {this} {textbook.\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
-    \trans%
-    ``This is a textbook of the Russian language.''
-\end{exe}
-\end{frame}
+        結果はこのようになります．
+        \begin{exe}
+            \ex%
+            \glll%
+            {これは} {ロシア語の} {教科書} {です} \\
+            {kore-wa} {rosia-go-no} {kyōkašo} {desu} \\
+            {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
+            \trans%
+            ``This is a textbook of the Russian language''
+            \ex%
+            \glll%
+            {Это} {учебник} {русского} {языка} \\
+            % {Э'то} {уче'бник} {ру'сского} {языка'} \\
+            {èto} {učebnik} {russk-ovo} {jazyk-a} \\
+            {this} {textbook.\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
+            \trans%
+            ``This is a textbook of the Russian language.''
+        \end{exe}
+    \end{frame}
 
-
-\begin{frame}[fragile]
-\frametitle{ギリシャ文字やキリル文字を使うときの注意点}
-Lua\TeX{}-jaパッケージを読み込んだときに注意しなければならないのが，
-ギリシャ文字やキリル文字を和文フォントが表示されることです．
-プリアンブルに以下を追加して欧文フォントで表示されるようにしましょう．
-\begin{leftbar}
-% https://tex.stackexchange.com/questions/17774/listings-package-can-i-include-a-backslash-in-language-keyword-begin-for
-\begin{lstlisting}[%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily\footnotesize,
-    % asterisk for highlight backslash
-    texcsstyle=*\color{sRed}\bfseries,
-    keywordstyle=\bfseries,
-    moretexcs={ltjsetparameter},
-    morekeywords={jacharrange},
-    commentstyle=\color{sDarkBlue}
-]
-\ltjsetparameter{%
-  jacharrange={%
-    -2,  % Exclude Greek and Cyrillic letters
-    -3   % Exclude Punctuations and Misc symbols
-  }
-}
-\end{lstlisting}
-\end{leftbar}
-\end{frame}
-
-\subsection{アラビア文字}
-\begin{frame}[fragile]
-\frametitle{アラビア文字I}
-    もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{\textbf{arabluatex}}を利用します．
-    \href{https://bboxtype.com/typefaces/FiraGO/}{\textbf{Fira GO}}フォントは\href{https://bboxtype.com/typefaces/FiraSans/}{\textbf{Fira Sans}}の拡張であり，アラビア文字以外にも多くの文字種を含んでいます．
-
-\begin{leftbar}
-\begin{lstlisting}[%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily\footnotesize,
-    % asterisk for highlight backslash
-    texcsstyle=*\color{sRed}\bfseries,
-    keywordstyle=\bfseries,
-    moretexcs={ltjsetparameter,arabicfont,newfontfamily,SetTranslitStyle,SetTranslitConvention},
-    morekeywords={},
-    commentstyle=\color{sDarkBlue}
-]
+    \subsection{アラビア文字}
+    \begin{frame}[fragile]
+    \frametitle{アラビア文字I}
+        もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします．
+    \begin{leftbar}
+    \begin{lstlisting}[%
+        language={[LaTeX]TeX},
+        % asterisk for highlight backslash
+        moretexcs={
+            ltjsetparameter,
+            arabicfont,
+            newfontfamily,
+            translitfont,
+            SetTranslitFont,
+            SetTranslitStyle,
+            SetTranslitConvention
+        },
+        morekeywords={},
+    ]
 \usepackage{arabluatex}
 \newfontfamily\arabicfont[%
   Script=Arabic, % enable ligatures
@@ -257,163 +244,108 @@ Lua\TeX{}-jaパッケージを読み込んだときに注意しなければな�
     +anum, % use eastern arabic numerals
     +ss05} % put kasrah below shadda
 ]{Fira GO}
+\newfontfamily\translitfont[Ligatures=TeX]{%
+  TeX Gyre Termes
+}
+\SetTranslitFont{\translitfont}
 \SetTranslitStyle{\itshape} % \upshape, \itshape
 \SetTranslitConvention{arabica} % dmg, loc, arabica
-\end{lstlisting}
-\end{leftbar}
-\end{frame}
+    \end{lstlisting}
+    \end{leftbar}
+    \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{アラビア文字II}
-ラテン文字で入力できるのでRTL（右から左への横書き）や合字に対応していないエディタでも編集できます．
-転写の方法は\texttt{dmg, arabica, loc}の3種類から選べます．
+    \begin{frame}[fragile]
+        \frametitle{アラビア文字II}
+        ラテン文字で入力できるのでRTL（右から左への横書き）や合字に対応していないエディタでも編集できます．
+        転写の方法は\texttt{dmg, arabica, loc}の3種類から選べます．
 
-\begin{leftbar}
-\begin{lstlisting}[%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily\footnotesize,
-    % asterisk for highlight backslash
-    texcsstyle=*\color{sRed}\bfseries,
-    keywordstyle=\bfseries,
-    moretexcs={arb},
-    morekeywords={arab},
-    commentstyle=\color{sDarkBlue}
-]
+        \begin{leftbar}
+        \begin{lstlisting}[%
+            language={[LaTeX]TeX},
+            % asterisk for highlight backslash
+            moretexcs={arb},
+            morekeywords={arab}
+        ]
 \begin{arab}[fullvoc]
     'anta tatakallamu 'l-lu.gaTa
     'l-`arabiyyaTa jayyidaN!
 \end{arab}
 \arb[trans]{'anta tatakallamu
             'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
-\end{lstlisting}
-\end{leftbar}
+        \end{lstlisting}
+        \end{leftbar}
 
-\begin{arab}[fullvoc]
-    'anta tatakallamu 'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!
-\end{arab}
+        \begin{arab}[fullvoc]
+            'anta tatakallamu 'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!
+        \end{arab}
 
-\bigskip
+        \bigskip
 
-\arb[trans]{'anta tatakallamu
-            'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
-\end{frame}
+        \arb[trans]{'anta tatakallamu 'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
+    \end{frame}
 
-\subsection{音声記号}
-\begin{frame}
-    \frametitle{音声記号}
-    Fira Sansフォントは多くの文字を含んでおり，またLua\LaTeX はユニコードによる入力に対応しているため，そのまま打ち込むだけで音声記号が表示されます．
+    \begin{frame}
+        \frametitle{係り受け解析}
+        係り受けの図を挿入するには\href{https://ctan.org/pkg/tikz-dependency}{\texttt{tikz-dependency}}を利用します．
 
-    \smallskip
+        \bigskip
 
-    （例）\textbf{медуза} [mʲɪˈduzə] くらげ
+        \begin{figure}
+            \begin{subfigure}[t]{0.38\textwidth}
+                \centering
+                \scalebox{.9}{%
+                    \begin{dependency}[hide label]
+                        \begin{deptext}[column sep=2\zw]
+                            兵庫を \& 訪れた。 \\
+                        \end{deptext}
+                        \depedge{2}{1}{目的語}
+                    \end{dependency}
+                }
+                \caption{文節単位・ラベルなし}\figlabel{dep-without-labels}
+            \end{subfigure}
+            \begin{subfigure}[t]{0.6\textwidth}
+                \centering
+                \scalebox{.9}{%
+                    \begin{dependency}[text only label,label style={above}]
+                        \begin{deptext}[column sep=2\zw]
+                            兵庫  \& を  \& 訪れ \& た。 \\
+                            {\scriptsize 固有名詞} \& {\scriptsize 接置詞} \& {\scriptsize 動詞} \& {\scriptsize 助動詞} \\
+                        \end{deptext}
+                        \depedge{1}{2}{格表示}
+                        \depedge{3}{1}{目的語}
+                        \depedge{3}{4}{助動詞}
+                    \end{dependency}
+                }
+                \caption{単語単位・ラベルあり}\figlabel{dep-with-labels}
+            \end{subfigure}
+            \caption{文「兵庫を訪れた。」を係り受け解析し，図示したもの．}
+        \end{figure}
+        \figref{dep-without-labels}や\figref{dep-with-labels}のように参照することができます．
+    \end{frame}
 
-    \bigskip
+    \begin{frame}
+        \frametitle{その他}
+        箇条書きの項目が鉤括弧から始まるときの注意点
+        \begin{itemize}
+            \item こんにちは
+            \item 「こんにちは」
 
-    入力には以下を用いると便利です．
-    \begin{itemize}
-        \item Windows → \faGithub\ \href{https://github.com/samhocevar/wincompose}{\texttt{samhocevar/wincompose}}
-        \item macOS → \faGithub\ \href{https://github.com/gnarf/osx-compose-key}{\texttt{gnarf/osx-compose-key}}
-        \item Linux → 標準のCompose Key
-    \end{itemize}
-\end{frame}
+                行頭の余白が大きい
+            \item \leavevmode\inhibitglue 「こんにちは」
 
-\subsection{その他}
-\begin{frame}[fragile]
-    \frametitle{画像の引用}
-    画像の挿入には\verb+\includegraphics+コマンドを使います．
-    Creative Commonsライセンスの作品には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です．
-    必要に応じて\verb+\href{+\emph{uri}\verb+}{+\emph{text}\verb+}+で元のファイルへリンクを張ります．
+                \texttt{\textbackslash item \textbackslash leavevmode\textbackslash inhibitglue} で余白を調整
+        \end{itemize}
 
-    \bigskip
+        \bigskip
 
-    \begin{figure}[b]
-        \includegraphics[width=0.4\textwidth]{cat.jpg}
-        \caption{\href{https://www.flickr.com/photos/selda_eigler/8687127864/in/photolist-eeDNsC-qWFs4R-7CNDjJ-9c8DxY-eeDNhC-UCZ63T-dJNGUc-e5Nk39-988EVA-kUgwo-owDcVP-jQGjjt-5zkGTy-7WRCUo-b91XbZ-Mj8Ku-5pzwSA-9Bct2H-7CNHMY-7CJJMB-8MyEYn-9x45Mp-7JTq8M-ZrpGJ9-8fRht4-4SxVZT-5pzwjJ-ZsPJjL-aE44GL-dF6uWD-kqbHgM-5F373J-ZsQrVG-qyD7E9-ajyDPL-4WDvTp-KbDSc-5kCxD9-4MdeUo-pgDQcG-pPWrXD-662AFD-oTnC8k-apYceQ-nJSaaY-7CJLZv-7CJJMn-7CNFsU-XNMWkw-ccdtT9}{\emph{Cat} by Selda Eigler} \ccby.}
-    \end{figure}
+        参照：\href{http://doratex.hatenablog.jp/entry/20140714/1405302796}{「TeX Live 2014のpTeX系列における\textbackslash inhibitglueの仕様変更」}
+    \end{frame}
 
-\end{frame}
-
-\begin{frame}
-    \frametitle{長め文章の引用}
-    \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージのleftbar環境を使うと引用であることが分かりやすくなります．
-
-    \begin{quoteblock}
-ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
-
-\hfill \citetalias{poetics}
-    \end{quoteblock}
-
-    \begin{quoteblock}
-        「あの森\ruby{琴}{ライラ}の宿でせう。
-        あたしきつとあの森の中には、
-        むかしの大きなオーケストラの人たちが集まつていらつしやると思ふわ。
-        まはりには青い孔雀やなんかたくさんゐると思ふわ。」
-        女の子が答へました。
-
-        \hfill \citetalias{ginga}
-    \end{quoteblock}
-\end{frame}
-
-\begin{frame}
-    \frametitle{係り受け解析}
-    \begin{figure}
-        \begin{subfigure}[t]{0.38\textwidth}
-            \centering
-            \scalebox{.9}{%
-                \begin{dependency}[hide label]
-                    \begin{deptext}[column sep=2\zw]
-                        兵庫を \& 訪れた。 \\
-                    \end{deptext}
-                    \depedge{2}{1}{目的語}
-                \end{dependency}
-            }
-            \caption{文節単位・ラベルなし}\figlabel{without-label}
-        \end{subfigure}
-        \begin{subfigure}[t]{0.6\textwidth}
-            \centering
-            \scalebox{.9}{%
-                \begin{dependency}[text only label,label style={above}]
-                    \begin{deptext}[column sep=2\zw]
-                        兵庫  \& を  \& 訪れ \& た。 \\
-                        {\scriptsize 固有名詞} \& {\scriptsize 接置詞} \& {\scriptsize 動詞} \& {\scriptsize 助動詞} \\
-                    \end{deptext}
-                    \depedge{1}{2}{格表示}
-                    \depedge{3}{1}{目的語}
-                    \depedge{3}{4}{助動詞}
-                \end{dependency}
-            }
-            \caption{単語単位・ラベルあり}\figlabel{with-label}
-        \end{subfigure}
-        \caption{文「兵庫を訪れた。」を係り受け解析し、図示したもの。}
-    \end{figure}
-    \figref{without-label}と\figref{with-label}を参照する。
-\end{frame}
-
-\begin{frame}
-    \footnotesize
-    \frametitle{\appendixname}
-    箇条書きの項目が鉤括弧から始まるときの注意点
-    \begin{itemize}
-        \item こんてちあ
-        \item 「こんてちあ」
-
-            行頭の余白が大きい
-        \item \leavevmode\inhibitglue 「こんてちあ」
-
-            \texttt{\textbackslash item \textbackslash leavevmode\textbackslash inhibitglue} で余白を調整
-    \end{itemize}
-
-    \bigskip
-
-    参照：\href{http://doratex.hatenablog.jp/entry/20140714/1405302796}{TeX Live 2014のpTeX系列における\textbackslash inhibitglueの仕様変更}
-\end{frame}
-
-
-\begin{frame}[plain,noframenumbering,allowframebreaks]
-    \frametitle{参考文献}
-    \footnotesize
-    \bibliographystyle{jecon}
-    \bibliography{demo}
-\end{frame}
+    \begin{frame}[plain,noframenumbering,allowframebreaks]
+        \frametitle{参考文献}
+        \small
+        \bibliographystyle{jecon}
+        \bibliography{demo}
+    \end{frame}
 
 \end{document}
