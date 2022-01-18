@@ -37,10 +37,11 @@
   \RequirePackage[ipa,expert]{luatexja-preset}
 }
 \renewcommand{\kanjifamilydefault}{\gtdefault}
-\AtBeginEnvironment{tabular}{%
-  \addfontfeature{Numbers={Monospaced}}%
+\iffontsavailable{FrutigerLTStd-Black}{%
+  \newfontfamily\superbold{FrutigerLTStd-Black}
+}{%
+  \newfontfamily\superbold{TeX Gyre Adventor}
 }
-\newfontfamily\superbold{FrutigerLTStd-Black}
 \newjfontfamily\jsuperbold{HiraKakuStd-W8}
 \setbeamerfont{title}{size=\Huge,family=\superbold\jsuperbold}
 \setbeamerfont{frametitle}{size=\large,series=\bfseries}
