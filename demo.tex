@@ -1,5 +1,4 @@
 \documentclass[%
-    xcolor=table,
     hyperref={%
         colorlinks,
         linkcolor=sDarkBlue,
@@ -8,7 +7,6 @@
     }
 ]{beamer}
 \usetheme{sakura}
-\definecolor{sColoredRowColor}{HTML}{D6EAF8}
 \ltjsetparameter{%
     jacharrange={%
         -2, % Exclude Greek and Cyrillic letters.
@@ -108,22 +106,15 @@
     \begin{frame}
         \frametitle{表の挿入}
         Beamerでは論文などの表のソースコードをほぼそのまま利用できて便利です．
-        Beamerクラスに\inlinecommand{xcolor=table}オプションをつけると色をつけることも可能です．
         \begin{table}
             \centering
-            \extrarowheight=\aboverulesep
-            \addtolength{\extrarowheight}{\belowrulesep}
-            \aboverulesep=0pt
-            \belowrulesep=0pt
             \caption{表の例．}\tablabel{tab}
             \begin{tabular}{rrr}
                 \toprule
                 \header{a} & \header{b} & \header{c} \\
                 \midrule
-                \rowcolor{sColoredRowColor}
                 0.123 & 0.28  & 0.32 \\
                 0.234 & 1.25  & 0.45 \\
-                \rowcolor{sColoredRowColor}
                 0.123 & 0.28  & 0.32 \\
                 0.234 & 1.25  & 0.45 \\
                 \bottomrule
