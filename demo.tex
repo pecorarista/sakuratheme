@@ -1,7 +1,14 @@
 \documentclass[%
-    hyperref={colorlinks,linkcolor=sDarkBlue,urlcolor=sDarkBlue,citecolor=sDarkBlue}
+    xcolor=table,
+    hyperref={%
+        colorlinks,
+        linkcolor=sDarkBlue,
+        urlcolor=sDarkBlue,
+        citecolor=sDarkBlue
+    }
 ]{beamer}
 \usetheme{sakura}
+\definecolor{sColoredRowColor}{HTML}{D6EAF8}
 \ltjsetparameter{%
     jacharrange={%
         -2, % Exclude Greek and Cyrillic letters.
@@ -43,6 +50,7 @@
 \setrefstyle{fig}{prefix=図}
 \newref{math}
 \renewcommand{\theequation}{\arabic{equation}}
+\newcommand{\inlinecommand}[1]{{\ttfamily #1}}
 \setrefstyle{math}{refcmd=(\ref{#1})}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
@@ -100,12 +108,22 @@
     \begin{frame}
         \frametitle{表の挿入}
         Beamerでは論文などの表のソースコードをほぼそのまま利用できて便利です．
+        Beamerクラスに\inlinecommand{xcolor=table}オプションをつけると色をつけることも可能です．
         \begin{table}
+            \centering
+            \extrarowheight=\aboverulesep
+            \addtolength{\extrarowheight}{\belowrulesep}
+            \aboverulesep=0pt
+            \belowrulesep=0pt
             \caption{表の例．}\tablabel{tab}
             \begin{tabular}{rrr}
                 \toprule
                 \header{a} & \header{b} & \header{c} \\
                 \midrule
+                \rowcolor{sColoredRowColor}
+                0.123 & 0.28  & 0.32 \\
+                0.234 & 1.25  & 0.45 \\
+                \rowcolor{sColoredRowColor}
                 0.123 & 0.28  & 0.32 \\
                 0.234 & 1.25  & 0.45 \\
                 \bottomrule
@@ -124,9 +142,9 @@
 
     \begin{frame}[fragile]
         \frametitle{画像の引用}
-        画像の挿入には\verb+\includegraphics+コマンドを使います．
+        画像の挿入には\inlinecommand{\textbackslash includegraphics}コマンドを使います．
         Creative Commonsライセンスの作品には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です．
-        必要に応じて\verb+\href{+\emph{uri}\verb+}{+\emph{text}\verb+}+で元のファイルへリンクを張ります．
+        必要に応じて\inlinecommand{\textbackslash href\{{\rmfamily\mdseries\itshape uri}\}\{{\rmfamily\mdseries\itshape text}\}}で元のファイルへリンクを張ります．
 
         \bigskip
 
@@ -139,7 +157,7 @@
 
     \begin{frame}
         \frametitle{長め文章の引用}
-        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージのleftbar環境を使うと引用であることが分かりやすくなります．
+        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使うと引用であることが分かりやすくなります．
 
         \begin{quoteblock}
     ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
@@ -259,7 +277,7 @@
     \begin{frame}[fragile]
         \frametitle{アラビア文字II}
         ラテン文字で入力できるのでRTL（右から左への横書き）や合字に対応していないエディタでも編集できます．
-        転写の方法は\texttt{dmg, arabica, loc}の3種類から選べます．
+        転写の方法は\inlinecommand{dmg}, \inlinecommand{arabica}, \inlinecommand{loc}の3種類から選べます．
 
         \begin{leftbar}
         \begin{lstlisting}[%
