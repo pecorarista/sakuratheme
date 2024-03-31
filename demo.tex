@@ -27,7 +27,6 @@
 \usepackage{amsmath,amssymb}
 \usepackage{framed}
 \usepackage{listings}
-\usepackage[sort]{natbib}
 \usepackage{tikz-dependency}
 \usepackage{wtref}
 \renewcommand{\tablename}{表}
@@ -43,23 +42,32 @@
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
 \usetikzlibrary{automata,positioning,arrows,calc}
+\usepackage[%
+    backend=biber,
+    style=pecorarista,
+    sorting=nyvt,
+    urldate=long,
+    natbib=true,
+    maxnames=2
+]{biblatex}
+\addbibresource{main.bib}
 \defcitealias{poetics}{アリストテレス『詩学』1457b}
 \defcitealias{ginga}{宮澤賢治『銀河鉄道の夜』九 ジョバンニの切符}
 \DeclareMathOperator{\exponential}{exp}
 \newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newenvironment{quoteblock}{%
-    \def\FrameCommand{%
-        {\color{sLightGray}{\vrule width 3pt}}%
-        \hspace{10pt}
-    }%
-    \MakeFramed {\advance\hsize-\width \FrameRestore}}%
+  \def\FrameCommand{%
+    {\color{sLightGray}{\vrule width 3pt}}%
+      \hspace{10pt}
+  }%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}}%
 {\endMakeFramed}
 \lstset{%
-    language={[LaTeX]TeX},
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\bfseries,
-    texcsstyle=*\color{sRed}\bfseries,
-    commentstyle=\color{sDarkBlue}
+  language={[LaTeX]TeX},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\bfseries,
+  texcsstyle=*\color{sRed}\bfseries,
+  commentstyle=\color{sDarkBlue}
 }
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
@@ -342,11 +350,17 @@
         参照：\href{http://doratex.hatenablog.jp/entry/20140714/1405302796}{「TeX Live 2014のpTeX系列における\textbackslash inhibitglueの仕様変更」}
     \end{frame}
 
-    \begin{frame}[plain,noframenumbering,allowframebreaks]
-        \frametitle{参考文献}
-        \small
-        \bibliographystyle{jecon}
-        \bibliography{demo}
+    \begin{frame}[%
+        allowframebreaks,
+        plain
+    ]{参考文献}
+
+        \begin{columns}
+            \begin{column}{0.95\textwidth}  % to adjust left margin
+                \printbibliography[title={参考文献}]  % for PDF bookmark
+            \end{column}
+        \end{columns}
+
     \end{frame}
 
 \end{document}
