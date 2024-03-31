@@ -4,7 +4,8 @@
         linkcolor=sDarkBlue,
         urlcolor=sDarkBlue,
         citecolor=sDarkBlue
-    }
+    },
+    aspectratio=169
 ]{beamer}
 \usetheme{sakura}
 \ltjsetparameter{%
@@ -17,17 +18,6 @@
     alxspmode={92,allow}
 }
 \usepackage{luatexja-ruby}
-\usepackage{arabluatex}
-\newfontfamily\arabicfont[%
-    Script=Arabic,     % enable ligatures
-    RawFeature={%
-        +anum,         % use eastern arabic numerals
-        +ss05}         % put kasrah below shadda
-]{Fira GO Light}
-\newfontfamily\translitfont[Ligatures=TeX]{TeX Gyre Termes}
-\SetTranslitFont{\translitfont}
-\SetTranslitStyle{\itshape}  % \upshape, \itshape
-\SetTranslitConvention{dmg}  % dmg, loc, arabica
 \usepackage{breakurl}
 \usepackage{booktabs}
 \usepackage{ccicons}
