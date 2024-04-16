@@ -3,21 +3,13 @@
 \RequirePackage{fontspec}
 \setmainfont{TeX Gyre Termes}
 \setsansfont[ItalicFont={NotoSans-Italic}]{Noto Sans}
+\RequirePackage[match]{luatexja-fontspec}
+\RequirePackage{luatexja-otf}
+\setsansjfont{Noto Sans JP}
 \RequirePackage[bold-style=ISO]{unicode-math}
 \setmathfont{TeX Gyre Termes Math}
 \setmonofont{Roboto Mono}
 \RequirePackage[match]{luatexja-fontspec}
-\RequirePackage[
-    deluxe,%
-    scale=0.95
-]{luatexja-preset}
-\ltjnewpreset{slide}{%
-  mc-m = A-OTF-RyuminPro-Regular.otf,
-  gt-m = BIZUDGothic-Regular.ttf,
-  gt-b = BIZUDGothic-Bold.ttf,
-  mg-m = MotoyaMaruStd-W5.otf
-}
-\ltjapplypreset{slide}
 \renewcommand{\kanjifamilydefault}{\gtdefault}
 \newfontfamily\superbold{FrutigerLTStd-Black}
 \RequirePackage{arabluatex}

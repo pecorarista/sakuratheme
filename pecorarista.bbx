@@ -1,0 +1,54 @@
+\RequireBibliographyStyle{chicago-notes}
+
+% https://obsica.com/biblatex-japanese-config/
+
+\DeclareNameFormat{japanese}{%参考文献リストでのフォーマット
+  \usebibmacro{name:family-given}
+  {\namepartfamily}
+  {\namepartgiven}
+  {\namepartprefix}
+  {\namepartsuffix}%
+  \usebibmacro{name:andothers}
+}
+
+\DeclareNameFormat{labelname-japanese}{% 文中でのフォーマット
+  \ifcase\value{uniquename}%
+    \usebibmacro{name:family}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \or
+    \usebibmacro{name:family-given}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \fi
+  \usebibmacro{name:andothers}
+}
+
+\DefineBibliographyStrings{english}{%
+  andothers = {他}
+}
+
+\AtEveryBibitem{%
+  \iffieldequalstr{langid}{japanese}
+    {\DeclareNameAlias{default}{japanese}%
+     \DeclareNameAlias{sortname}{japanese}%
+     \renewcommand*{\revsdnamepunct}{}
+     \DeclareDelimFormat{multinamedelim}{・}
+     \DeclareDelimFormat{finalnamedelim}{・}
+     \renewbibmacro*{bytranslator}{%
+       \ifnameundef{translator}
+       {}
+       {\printnames[bytranslator]{translator}\printtext[parens]{訳}}}%
+     \renewbibmacro*{bytranslator+others}{\usebibmacro{bytranslator}}%
+     % タイトルの書式
+     \DeclareFieldFormat*{title}{「#1」\leavevmode\inhibitglue}
+     \DeclareFieldFormat[book]{title}{『#1』\leavevmode\inhibitglue}
+     \DeclareFieldAlias{booktitle}[book]{title}
+     \DeclareFieldAlias{journaltitle}[book]{title}
+     \renewbibmacro{in:}{}% In:を削除
+    }{}%
+}

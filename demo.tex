@@ -21,9 +21,8 @@
 \usepackage{breakurl}
 \usepackage{booktabs}
 \usepackage{ccicons}
-\usepackage{bxghost}
 \usepackage{subcaption}
-\usepackage{fontawesome}
+\usepackage{fontawesome5}
 \usepackage{amsmath,amssymb}
 \usepackage{framed}
 \usepackage{listings}
@@ -31,8 +30,21 @@
 \usepackage{wtref}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{図}
+\newcounter{ngloss}
+\renewcommand{\thengloss}{\alph{ngloss}}
+\makeatletter
+\newenvironment{gloss}[1][]{
+    \refstepcounter{ngloss}
+    \begin{table}[#1]
+    \raggedright
+}{
+    \end{table}
+}
+\makeatother
 \newref{tab}
 \setrefstyle{tab}{prefix=表}
+\newref{gloss}
+\setrefstyle{gloss}{prefix=グロス(,suffix=)}
 \newref{fig}
 \setrefstyle{fig}{prefix=図}
 \newref{math}
@@ -41,18 +53,18 @@
 \setrefstyle{math}{refcmd=(\ref{#1})}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
+\setbeamertemplate{itemize items}{\raisebox{1.5pt}{\scalebox{0.4}{\ltjjachar`●}}}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
 \usetikzlibrary{automata,positioning,arrows,calc}
 \usepackage[%
-    backend=biber,
-    style=pecorarista,
-    sorting=nyvt,
-    urldate=long,
-    natbib=true,
-    maxnames=2
+  backend=biber,
+  style=pecorarista,
+  sorting=nyvt,
+  urldate=long,
+  natbib=true,
+  maxnames=2
 ]{biblatex}
-\addbibresource{main.bib}
-\defcitealias{poetics}{アリストテレス『詩学』1457b}
-\defcitealias{ginga}{宮澤賢治『銀河鉄道の夜』九 ジョバンニの切符}
+\addbibresource{demo.bib}
 \DeclareMathOperator{\exponential}{exp}
 \newcommand\header[1]{\multicolumn{1}{c}{\textbf{#1}}}
 \newenvironment{quoteblock}{%
@@ -75,11 +87,15 @@
 \institute{所属}
 \author{著者 太郎}
 \date{{\number\year}年{\number\month}月{\number\day}日}
-\usepackage{gb4e,cgloss4e}
-\renewcommand\eachwordone{\relax}
-\renewcommand\eachwordtwo{\itshape}
-\renewcommand\eachwordthree{\relax}
-\noautomath%
+% https://tex.stackexchange.com/questions/2541/beamer-frame-numbering-in-appendix
+\newcommand{\backupbegin}{
+   \newcounter{framenumberappendix}
+   \setcounter{framenumberappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumberappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumberappendix}}
+}
 \begin{document}
 
     \maketitle
@@ -102,31 +118,57 @@
 
     \section{基本}
     \begin{frame}
-        \frametitle{表の挿入}
-        Beamerでは論文などの表のソースコードをほぼそのまま利用できて便利です．
+        \frametitle{表の挿入I}
+        Beamerでは論文中の表のソースコードをほぼそのまま利用できて便利です．
         \begin{table}
             \centering
             \caption{表の例．}\tablabel{tab}
-            \begin{tabular}{rrr}
+            \begin{tabular}{lrrr}
                 \toprule
-                \header{a} & \header{b} & \header{c} \\
+                \header{Model}   & \header{Precision} & \header{Recall} & \header{F1} \\
                 \midrule
-                0.123 & 0.28  & 0.32 \\
-                0.234 & 1.25  & 0.45 \\
-                0.123 & 0.28  & 0.32 \\
-                0.234 & 1.25  & 0.45 \\
+                \texttt{model-a} & 0.75 & 0.60 & 0.67 \\
+                \texttt{model-b} & \textbf{0.80} & 0.70 & 0.75 \\
+                \texttt{model-c} & 0.65 & \textbf{0.85} & 0.74 \\
+                \texttt{model-d} & 0.78 & 0.78 & \textbf{0.78} \\
                 \bottomrule
             \end{tabular}
         \end{table}
     \end{frame}
 
     \begin{frame}
+        \frametitle{表の挿入II}
+        特殊な記号を入力したい場合は\href{https://ctan.org/pkg/fontawesome5?lang=en}{fontawesome5}パッケージを利用すると便利です．
+        \begin{table}
+            \centering
+            \caption{表の例．}\tablabel{tabfontawesome}
+            \begin{tabular}{lcc}
+                \toprule
+                \header{Model}   & \header{Algorithm A} & \header{Algorithm B} \\
+                \midrule
+                \texttt{model-a} & \textcolor{sRed}{\faTimes} & \textcolor{sRed}{\faTimes} \\
+                \texttt{model-b} & \textcolor{sRed}{\faTimes} & \textcolor{sOKGreen}{\faCheck} \\
+                \texttt{model-c} & \textcolor{sOKGreen}{\faCheck} & \textcolor{sRed}{\faTimes} \\
+                \texttt{model-d} & \textcolor{sOKGreen}{\faCheck} & \textcolor{sOKGreen}{\faCheck} \\
+                \bottomrule
+            \end{tabular}
+        \end{table}
+    \end{frame}
+
+
+    \begin{frame}
         \frametitle{数式}
-        以下で定義される関数$\sigma$を\emph{logistic sigmoid}関数と呼ぶ\citep{prml}．
+        \(X_n\)が\(X\)に確率収束する(converge in probability)とは，
+        任意の\(\varepsilon > 0\)と\(\delta > 0\)に対して，
+        ある自然数\(N\)が存在して，\(n \geq N\)を満たす任意の自然数\(n\)について
         \begin{align}
-            \sigma(\mu) = \frac{1}{1 + \exponential(-\mu)} \mathlabel{sigmoid}
+            P(\{\omega \in \varOmega \mid \lvert X_n(\omega) - X(\omega) \rvert > \delta \}) < \varepsilon \mathlabel{convprob}
         \end{align}
-        数式を参照することもできます\mathref{sigmoid}．
+        が成り立つことをいう．
+
+        \bigskip
+
+        \mathref{convprob}を\(X_n \xrightarrow{P} X\)のように書くこともある．
     \end{frame}
 
     \begin{frame}[fragile]
@@ -151,7 +193,7 @@
         \begin{quoteblock}
     ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
 
-    \hfill \citetalias{poetics}
+            \hfill \citetitle{poetics}
         \end{quoteblock}
 
         \begin{quoteblock}
@@ -161,7 +203,7 @@
             まはりには青い孔雀やなんかたくさんゐると思ふわ。」
             女の子が答へました。
 
-            \hfill \citetalias{ginga}
+            \hfill \citetitle{ginga}
         \end{quoteblock}
     \end{frame}
 
@@ -169,62 +211,27 @@
     \section{言語学}
     \subsection{グロス}
     \begin{frame}[fragile]
-        \frametitle{グロスI}
-        \href{https://ctan.org/pkg/gb4e}{\texttt{gb4e}}と
-        \href{https://ctan.org/pkg/gb4e}{\texttt{cgloss4e}}パッケージを利用します．
+        \frametitle{グロス}
+        大量に記載するのでなければ\href{https://ctan.org/pkg/gb4e?lang=en}{gb4e}ではなく\texttt{table}環境で十分だと思います。
 
         \bigskip
 
-        1行目に正書法の表記を使い，
-        2行目にイタリックでラテン字転写する場合はプリアンブルに以下のような記述をします．
+        \begin{gloss}
+            \raggedright
+            \begin{tabular}{lllll}
+                (a) & {Это} & {учебник} & {русского} & {языка} \\
+                % {Э'то} {уче'бник} {ру'сского} {языка'} \\
+                    & {èto} & {učebnik} & {russk-ovo} & {jazyk-a} \\
+                    & {this} & {textbook.\textsc{sg.nom}} & {Russian-\textsc{m.sg.gen}} & {language-\textsc{gen}} \\
+                    & \multicolumn{4}{l}{``This is a textbook of the Russian language.''}
+            \end{tabular}
+            \glosslabel{ru}
+        \end{gloss}
 
-        \begin{leftbar}
-        \begin{lstlisting}[%
-            language={[LaTeX]TeX},
-            % asterisk for highlight backslash
-            moretexcs={@ifundefined,eachwordone,eachwordtwo,eachwordthree,noautomath}
-        ]
-\usepackage{gb4e,cgloss4e}
-\renewcommand\eachwordone{\relax}
-\renewcommand\eachwordtwo{\itshape}
-\renewcommand\eachwordthree{\relax}
-\noautomath
-        \end{lstlisting}
-        \end{leftbar}
-    \end{frame}
+        \bigskip
 
-    \begin{frame}[fragile]
-        \setlength{\glossglue}{5pt plus 2pt minus 1pt}\footnotesize
-        \frametitle{グロスII}
-        余白が狭く感じる場合は以下のように調整を行うとよいです．
-        \begin{leftbar}
-        \begin{lstlisting}[%
-            language={[LaTeX]TeX},
-            moretexcs={setlength,glossglue},
-            morekeywords={plus,minus}
-        ]
-\setlength{\glossglue}{5pt plus 2pt minus 1pt}
-        \end{lstlisting}
-    \end{leftbar}
-
-        結果はこのようになります．
-        \begin{exe}
-            \ex%
-            \glll%
-            {これは} {ロシア語の} {教科書} {です} \\
-            {kore-wa} {rosia-go-no} {kyōkašo} {desu} \\
-            {this-\textsc{top}} {Russia-language-\textsc{gen}} {textbook} {be} \\
-            \trans%
-            ``This is a textbook of the Russian language''
-            \ex%
-            \glll%
-            {Это} {учебник} {русского} {языка} \\
-            % {Э'то} {уче'бник} {ру'сского} {языка'} \\
-            {èto} {učebnik} {russk-ovo} {jazyk-a} \\
-            {this} {textbook.\textsc{sg.nom}} {Russian-\textsc{m.sg.gen}} {language-\textsc{gen}} \\
-            \trans%
-            ``This is a textbook of the Russian language.''
-        \end{exe}
+        上の\glossref{ru}は\texttt{table}環境（をラップして定義した\texttt{gloss}環境）で作成しています．
+        詳しくはこのスライドのソースコードを参照してください．
     \end{frame}
 
     \subsection{アラビア文字}
@@ -350,17 +357,19 @@
         参照：\href{http://doratex.hatenablog.jp/entry/20140714/1405302796}{「TeX Live 2014のpTeX系列における\textbackslash inhibitglueの仕様変更」}
     \end{frame}
 
+    \backupbegin
+
     \begin{frame}[%
-        allowframebreaks,
+        % allowframebreaks,  % Enable `allowframebreaks` if the number of pages is larger than 1.
         plain
     ]{参考文献}
 
-        \begin{columns}
-            \begin{column}{0.95\textwidth}  % to adjust left margin
-                \printbibliography[title={参考文献}]  % for PDF bookmark
-            \end{column}
-        \end{columns}
+    \printbibliography[%
+        title={参考文献}  % for PDF bookmark
+    ]
 
     \end{frame}
+
+    \backupend
 
 \end{document}
