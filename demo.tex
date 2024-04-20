@@ -10,12 +10,10 @@
 \usetheme{sakura}
 \ltjsetparameter{%
     jacharrange={%
-        -2, % Exclude Greek and Cyrillic letters.
-        -3  % Punctuations and Miscellaneous symbols.
-    },
-    alxspmode={`/,allow},
-    alxspmode={`#,allow},
-    alxspmode={92,allow}
+        -2,  % Exclude Greek and Cyrillic letters.
+        -3,  % Punctuations and Miscellaneous symbols.
+        -7   % Hangul
+    }
 }
 \usepackage{luatexja-ruby}
 \usepackage{breakurl}
@@ -28,6 +26,13 @@
 \usepackage{listings}
 \usepackage{tikz-dependency}
 \usepackage{wtref}
+\usepackage{polyglossia}
+\setdefaultlanguage{japanese}
+\setotherlanguage[variant=poly]{greek}
+\setotherlanguage{russian}
+\setotherlanguage[variant=modern]{korean}
+\setotherlanguage{thai}
+\setotherlanguage{vietnamese}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{図}
 \newcounter{ngloss}
@@ -44,16 +49,15 @@
 \newref{tab}
 \setrefstyle{tab}{prefix=表}
 \newref{gloss}
-\setrefstyle{gloss}{prefix=グロス(,suffix=)}
+\setrefstyle{gloss}{refcmd=グロス(\ref{#1})}
 \newref{fig}
 \setrefstyle{fig}{prefix=図}
 \newref{math}
-\renewcommand{\theequation}{\arabic{equation}}
+\setrefstyle{math}{refcmd=式(\ref{#1})}
 \newcommand{\inlinecommand}[1]{{\ttfamily #1}}
-\setrefstyle{math}{refcmd=(\ref{#1})}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
-\setbeamertemplate{itemize items}{\raisebox{1.5pt}{\scalebox{0.4}{\ltjjachar`●}}}
+\setbeamertemplate{itemize items}[circle]
 \setbeamertemplate{bibliography item}{\insertbiblabel}
 \usetikzlibrary{automata,positioning,arrows,calc}
 \usepackage[%
@@ -77,9 +81,10 @@
 \lstset{%
   language={[LaTeX]TeX},
   basicstyle=\ttfamily\footnotesize,
-  keywordstyle=\bfseries,
+  keywordstyle=\color{sRed}\bfseries,
   texcsstyle=*\color{sRed}\bfseries,
-  commentstyle=\color{sDarkBlue}
+  commentstyle=\color{sDarkBlue},
+  morekeywords={usebeamertemplate,newref,setrefstyle,mathlabel,mathref}
 }
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
@@ -103,26 +108,34 @@
     \section{はじめに}
     \begin{frame}
         \frametitle{はじめに}
-        このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}のデモとして作ったものです．
+        このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}のデモとして作ったものです。
 
         \bigskip
 
-        そのため作り方を詳しく説明することはしませんが，
-        コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
-        \bigskip
+        そのため作り方を詳しく説明することはしませんが、
+        コードはすべて上記のレポジトリに含まれているので気になる方は参照ください。
+    \end{frame}
 
-        また言語学関連の話題の\LaTeX における扱い方を網羅的に知りたい方は
-        \href{https://www1.essex.ac.uk/linguistics/external/clmt/latex4ling/}
-        {LaTeX for Linguists}が参考になります．
+    \begin{frame}[fragile]
+        \frametitle{用紙サイズ}
+        アスペクト比の設定は\texttt{documentclass}のオプションで設定することができます。
+        デフォルトは4:3です。
+        \begin{leftbar}
+\begin{lstlisting}
+\documentclass[%
+    aspectratio=169
+]{beamer}
+\end{lstlisting}
+        \end{leftbar}
     \end{frame}
 
     \section{基本}
     \begin{frame}
-        \frametitle{表の挿入I}
-        Beamerでは論文中の表のソースコードをほぼそのまま利用できて便利です．
+        \frametitle{表の挿入}
+        Beamerでは論文中の表のソースコードをほぼそのまま利用できて便利です。
         \begin{table}
             \centering
-            \caption{表の例．}\tablabel{tab}
+            \caption{表の例。}\tablabel{tab}
             \begin{tabular}{lrrr}
                 \toprule
                 \header{Model}   & \header{Precision} & \header{Recall} & \header{F1} \\
@@ -137,11 +150,11 @@
     \end{frame}
 
     \begin{frame}
-        \frametitle{表の挿入II}
-        特殊な記号を入力したい場合は\href{https://ctan.org/pkg/fontawesome5?lang=en}{fontawesome5}パッケージを利用すると便利です．
+        \frametitle{アイコン}
+        アイコンを入力したい場合は\href{https://ctan.org/pkg/fontawesome5?lang=en}{fontawesome5}パッケージを利用すると便利です。
         \begin{table}
             \centering
-            \caption{表の例．}\tablabel{tabfontawesome}
+            \caption{アイコンを使った表の例。}\tablabel{tabfontawesome}
             \begin{tabular}{lcc}
                 \toprule
                 \header{Model}   & \header{Algorithm A} & \header{Algorithm B} \\
@@ -155,27 +168,9 @@
         \end{table}
     \end{frame}
 
-
-    \begin{frame}
-        \frametitle{数式}
-        \(X_n\)が\(X\)に確率収束する(converge in probability)とは，
-        任意の\(\varepsilon > 0\)と\(\delta > 0\)に対して，
-        ある自然数\(N\)が存在して，\(n \geq N\)を満たす任意の自然数\(n\)について
-        \begin{align}
-            P(\{\omega \in \varOmega \mid \lvert X_n(\omega) - X(\omega) \rvert > \delta \}) < \varepsilon \mathlabel{convprob}
-        \end{align}
-        が成り立つことをいう．
-
-        \bigskip
-
-        \mathref{convprob}を\(X_n \xrightarrow{P} X\)のように書くこともある．
-    \end{frame}
-
     \begin{frame}[fragile]
-        \frametitle{画像の引用}
-        画像の挿入には\inlinecommand{\textbackslash includegraphics}コマンドを使います．
-        Creative Commonsライセンスの作品には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です．
-        必要に応じて\inlinecommand{\textbackslash href\{{\rmfamily\mdseries\itshape uri}\}\{{\rmfamily\mdseries\itshape text}\}}で元のファイルへリンクを張ります．
+        \frametitle{CCアイコン}
+        Creative Commonsライセンスの作品を引用する際には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です。
 
         \bigskip
 
@@ -186,12 +181,64 @@
 
     \end{frame}
 
+
+    \begin{frame}[fragile]
+        \frametitle{箇条書き}
+        \settowidth{\leftmargini}{\usebeamertemplate{itemize item}}
+        \addtolength{\leftmargini}{\labelsep}
+        箇条書きのインデントを下げたくない場合はフレーム内で
+        \begin{leftbar}
+\begin{lstlisting}
+\settowidth{\leftmargini}{\usebeamertemplate{itemize item}}
+\addtolength{\leftmargini}{\labelsep}
+\end{lstlisting}
+        \end{leftbar}
+        としてください。
+
+        \bigskip
+
+        以下のようになります：
+
+        \smallskip
+
+        \begin{itemize}
+            \item \begin{korean}금연\end{korean}
+            \item \begin{thai}
+ห้ามสูบบุหรี่
+            \end{thai}
+            \item \begin{vietnamese}
+Cấm hút thuốc
+            \end{vietnamese}
+        \end{itemize}
+
+    \end{frame}
+
+
+    \begin{frame}[fragile]
+        \frametitle{コード}
+        \href{https://ctan.org/pkg/listings?lang=en}{\texttt{listing}}パッケージを使って
+        コードを挿入することができます。その際にフレームに\texttt{fragile}を指定しないと、
+        タイプセットの際にエラーが生じます。
+    \begin{leftbar}
+\begin{lstlisting}[language=Python]
+def main() -> None:
+    with Path('test.jsonl').open(mode='r') as r:
+        reader = jsonlines.Reader(r)
+        for obj in reader:
+            tokens = tokenize(obj['text'])
+\end{lstlisting}
+    \end{leftbar}
+    \end{frame}
+
     \begin{frame}
         \frametitle{長め文章の引用}
-        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使うと引用であることが分かりやすくなります．
+        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使うと引用であることが分かりやすくなります。
 
         \begin{quoteblock}
+
+        \begin{greek}[variant=ancient]
     ἅπαν δὲ ὄνομά ἐστιν ἢ κύριον ἢ γλῶττα ἢ μεταφορὰ ἢ κόσμος ἢ πεποιημένον ἢ ἐπεκτεταμένον ἢ ὑφῃρημένον ἢ ἐξηλλαγμένον.
+        \end{greek}
 
             \hfill \citetitle{poetics}
         \end{quoteblock}
@@ -230,14 +277,14 @@
 
         \bigskip
 
-        上の\glossref{ru}は\texttt{table}環境（をラップして定義した\texttt{gloss}環境）で作成しています．
-        詳しくはこのスライドのソースコードを参照してください．
+        上の\glossref{ru}は\texttt{table}環境（をラップして定義した\texttt{gloss}環境）で作成しています。
+        詳しくはこのスライドのソースコードを参照してください。
     \end{frame}
 
     \subsection{アラビア文字}
     \begin{frame}[fragile]
     \frametitle{アラビア文字I}
-        もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします．
+        もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします。
     \begin{leftbar}
     \begin{lstlisting}[%
         language={[LaTeX]TeX},

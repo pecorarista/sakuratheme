@@ -1,18 +1,19 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{beamerfontthemesakura}[2016/06/09 Sakura font theme]
 \RequirePackage{fontspec}
+\RequirePackage[match]{luatexja-fontspec}
+\RequirePackage[bold-style=ISO]{unicode-math}
+\RequirePackage{arabluatex}
+
 \setmainfont{TeX Gyre Termes}
 \setsansfont[ItalicFont={NotoSans-Italic}]{Noto Sans}
-\RequirePackage[match]{luatexja-fontspec}
-\RequirePackage{luatexja-otf}
 \setsansjfont{Noto Sans JP}
-\RequirePackage[bold-style=ISO]{unicode-math}
 \setmathfont{TeX Gyre Termes Math}
 \setmonofont{Roboto Mono}
-\RequirePackage[match]{luatexja-fontspec}
-\renewcommand{\kanjifamilydefault}{\gtdefault}
+\newfontfamily\hangulfontsf{Noto Sans KR}
+\newfontfamily\thaifontsf{Noto Sans Thai}
 \newfontfamily\superbold{FrutigerLTStd-Black}
-\RequirePackage{arabluatex}
+\renewcommand{\kanjifamilydefault}{\gtdefault}
 \newfontfamily\arabicfont[%
   Script=Arabic,  % enable ligatures
   RawFeature={%
