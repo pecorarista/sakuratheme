@@ -1,0 +1,15 @@
+\RequireBibliographyStyle{chicago-notes}
+
+\AtEveryBibitem{%
+  \iffieldequalstr{langid}{japanese}{%
+    \DeclareNameAlias{sortname}{family-given}%
+    \DeclareFieldFormat{title}{『#1』}
+    \renewcommand*{\revsdnamepunct}{}
+    \renewcommand*{\addperiod}{}
+    \renewcommand*{\addcomma}{}
+    \renewcommand*{\finentry}{．}
+    \renewbibmacro*{publ+loc+year}{%
+      \printlist{publisher}(\printdate)．
+    }%
+  }{}%
+}

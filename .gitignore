@@ -1,5 +1,6 @@
 *.aux
 *.bbl
+*.bcf
 *.blg
 *.dvi
 *.fdb_latexmk
@@ -14,6 +15,7 @@
 *.nav
 *.nlo
 *.out
+*.run.xml
 *.snm
 *.synctex.gz
 *.toc

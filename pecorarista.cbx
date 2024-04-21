@@ -1,0 +1,17 @@
+\RequireCitationStyle{chicago-notes}
+% https://tex.stackexchange.com/questions/108344/biblatexhyperref-citetitle-citeauthor-and-get-hyperlink
+\DeclareCiteCommand{\citetitle}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexfield{indextitle}}
+     {}%
+   \printtext[bibhyperref]{%
+       \iffieldequalstr{langid}{japanese}{『\printfield[noformat]{labeltitle}』}{%
+       \printfield[citetitle]{labeltitle}
+     }
+    }
+  }
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
