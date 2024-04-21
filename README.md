@@ -4,12 +4,14 @@ Sakura theme
 これは主に日本語を対象とした beamer のテンプレートです．  
 [mtheme](https://github.com/matze/mtheme) を元に作成しています．
 
-![スクリーンショット](screenshot-gloss.png)
+![デモのスクリーンショット（引用）](figures/9.png)
+
+![デモのスクリーンショット（グロス）](figures/10.png)
 
 ## Requirements
 
 + [TeX Live 2021 or later](https://www.tug.org/texlive/)
-+ [jecon.bst](https://github.com/ShiroTakeda/jecon-bst)
++ [Noto](https://fonts.google.com/noto)
 
 ## Example
 
