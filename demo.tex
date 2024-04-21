@@ -24,6 +24,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{framed}
 \usepackage{listings}
+\usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{tikz-dependency}
 \usepackage{wtref}
 \usepackage{polyglossia}
@@ -55,7 +57,6 @@
 \setrefstyle{fig}{prefix=図}
 \newref{math}
 \setrefstyle{math}{refcmd=式(\ref{#1})}
-\newcommand{\inlinecommand}[1]{{\ttfamily #1}}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{：}
 \setbeamertemplate{itemize items}[circle]
@@ -78,14 +79,15 @@
   }%
   \MakeFramed {\advance\hsize-\width \FrameRestore}}%
 {\endMakeFramed}
+% For inline codes
 \lstnewenvironment{LaTeXCode}{%
   \lstset{%
     language={[LaTeX]TeX},
     escapechar={|},
     alsoletter={*},
     basicstyle=\ttfamily\footnotesize,
-    texcsstyle=*\color{sRed}\bfseries,
     commentstyle=\color{sDarkBlue},
+    texcsstyle=*\color{sRed}\bfseries,
     moretexcs={%
       usebeamertemplate,
       newref,
@@ -111,15 +113,12 @@
       revsdnamepunct,
       renewbibmacro*,
       renewcommand*,
-      iffieldequalstr
+      iffieldequalstr,
     }
   }
 }{}
 \lstnewenvironment{PythonCode}{%
   \lstset{%
-    basicstyle=\ttfamily\footnotesize,
-    keywordstyle=\color{sRed}\bfseries,
-    commentstyle=\color{sDarkBlue},
     morekeywords={def, with, as, for, in}
   }
 }{}
@@ -212,7 +211,7 @@
         \bigskip
 
         \begin{figure}
-            \includegraphics[width=0.4\textwidth]{cat.jpg}
+            \includegraphics[width=0.4\textwidth]{figures/cat.jpg}
             \caption{\href{https://www.flickr.com/photos/selda_eigler/8687127864/in/photolist-eeDNsC-qWFs4R-7CNDjJ-9c8DxY-eeDNhC-UCZ63T-dJNGUc-e5Nk39-988EVA-kUgwo-owDcVP-jQGjjt-5zkGTy-7WRCUo-b91XbZ-Mj8Ku-5pzwSA-9Bct2H-7CNHMY-7CJJMB-8MyEYn-9x45Mp-7JTq8M-ZrpGJ9-8fRht4-4SxVZT-5pzwjJ-ZsPJjL-aE44GL-dF6uWD-kqbHgM-5F373J-ZsQrVG-qyD7E9-ajyDPL-4WDvTp-KbDSc-5kCxD9-4MdeUo-pgDQcG-pPWrXD-662AFD-oTnC8k-apYceQ-nJSaaY-7CJLZv-7CJJMn-7CNFsU-XNMWkw-ccdtT9}{\emph{Cat} by Selda Eigler} \ccby.}
         \end{figure}
 
@@ -259,7 +258,7 @@ Cấm hút thuốc
 
         \bigskip
 
-        左の縦線は\href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使っています．
+        左の縦線は\href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\texttt{leftbar}環境を使っています．
 
         \smallskip
 
@@ -326,7 +325,6 @@ def main() -> None:
         詳しくはこのスライドのソースコードを参照してください．
     \end{frame}
 
-    \subsection{アラビア文字}
     \begin{frame}[fragile]
     \frametitle{アラビア文字I}
         もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします．
@@ -352,7 +350,7 @@ def main() -> None:
     \begin{frame}[fragile]
         \frametitle{アラビア文字II}
         ラテン文字で入力できるのでRTL（右から左への横書き）や合字に対応していないエディタでも編集できます．
-        転写の方法は\inlinecommand{dmg}, \inlinecommand{arabica}, \inlinecommand{loc}の3種類から選べます．
+        転写の方法は\texttt{dmg}, \texttt{arabica}, \texttt{loc}の3種類から選べます．
 
         \begin{leftbar}
 \begin{LaTeXCode}
@@ -386,7 +384,7 @@ def main() -> None:
                 \scalebox{.9}{%
                     \begin{dependency}[hide label]
                         \begin{deptext}[column sep=2\zw]
-                            兵庫を \& 訪れた． \\
+                            兵庫を \& 訪れた。 \\
                         \end{deptext}
                         \depedge{2}{1}{目的語}
                     \end{dependency}
@@ -413,15 +411,56 @@ def main() -> None:
         \figref{dep-without-labels}や\figref{dep-with-labels}のように参照することができます．
     \end{frame}
 
-    \begin{frame}
+    \begin{frame}[fragile]
         \frametitle{ページの分割}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                abasdkj
+        \texttt{columns}環境を使うことでページを垂直に分割することができます。
+
+        \smallskip
+
+        \begin{columns}[onlytextwidth]
+
+            \begin{column}{0.48\textwidth}
+                \begin{quoteblock}
+                    la biz e lə sɔlɛ\textsuperscript{j} sə dispytɛ~‖
+                    \ ʃak\~{ɛ} asyʁ\~{ɑ} kilɛtɛ lə ply f\"{ɔ}ʁ̞~‖
+                    \ k\~{ɑ}t ilz\~{ɔ} vy \~{ɛ} vwɑjaʒœ ki sav\~{ɑ}sɛ~‖
+                    \ \~{ɑ}vlope d\~{ɑ} s\~{ɔ} m\~{ɑ}to~‖
+                    \ iː s\~{ɔ} t\~{ɔ}be dak\"{ɔ}ʁ̥ kə səlɥi ki aʁivʁe
+                    ləpʁ̥əmje a lə lɥi fɛʁote~‖
+                    səʁə ʁəgaʁde k\"{ɔ}m lə ply f\"{ɔ}ʁ̞~‖
+\ al\"{ɔ}ʁ̞
+la biz sɛ̝
+miz a sufle də tut se f\"{ɔ}ʁ̞s~‖
+                    \ mɛ ply ɛl suflɛ ply lə vwɑjaʒœʁ̞
+                    sɛʁɛ s\~{ɔ} m\~{ɑ}totʊʁ̞
+                    də lɥi~‖
+                    \ …
+
+                    \hfill \textit{French in \citetitle{ipa}}
+                \end{quoteblock}
+
             \end{column}
-            \begin{column}{0.5\textwidth}
-                abclkj
+
+            \begin{column}{0.48\textwidth}
+
+                IPAの入力は\href{https://github.com/samhocevar/wincompose}{WinCompose}
+                を使うと楽になります：
+                \begin{itemize}
+                    \item \texttt{[Compose]} + \texttt{o} + \texttt{e} \ \ltjjachar`→\ œ
+                    \item \texttt{[Compose]} + \texttt{h} + \texttt{r} \ \ltjjachar`→\ ʁ
+                \end{itemize}
+
+                \bigskip
+
+                装飾的な記号は \LaTeX のコマンドを使うと編集画面で見やすいです：
+
+                \begin{itemize}
+                    \item \texttt{\textcolor{sRed}{\bfseries \textbackslash\textasciitilde}\{o\}} \ \ltjjachar`→\ \~{o}
+                    \item \texttt{k\textcolor{sRed}{\bfseries \textbackslash textsuperscript}\{j\}} \ \ltjjachar`→\ k\textsuperscript{j}
+                \end{itemize}
+
             \end{column}
+
         \end{columns}
     \end{frame}
 
