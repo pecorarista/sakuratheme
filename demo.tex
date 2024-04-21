@@ -1,19 +1,19 @@
 \documentclass[%
-    hyperref={%
-        colorlinks,
-        linkcolor=sDarkBlue,
-        urlcolor=sDarkBlue,
-        citecolor=sDarkBlue
-    },
-    aspectratio=169
+  hyperref={%
+    colorlinks,
+    linkcolor=sDarkBlue,
+    urlcolor=sDarkBlue,
+    citecolor=sDarkBlue
+  },
+  aspectratio=169
 ]{beamer}
 \usetheme{sakura}
 \ltjsetparameter{%
-    jacharrange={%
-        -2,  % Exclude Greek and Cyrillic letters.
-        -3,  % Punctuations and Miscellaneous symbols.
-        -7   % Hangul
-    }
+  jacharrange={%
+    -2,  % Exclude Greek and Cyrillic letters.
+    -3,  % Punctuations and Miscellaneous symbols.
+    -7   % Hangul
+  }
 }
 \usepackage{luatexja-ruby}
 \usepackage{breakurl}
@@ -28,22 +28,23 @@
 \usepackage{wtref}
 \usepackage{polyglossia}
 \setdefaultlanguage{japanese}
-\setotherlanguage[variant=poly]{greek}
+\setotherlanguage[variant=polytonic]{greek}
 \setotherlanguage{russian}
 \setotherlanguage[variant=modern]{korean}
 \setotherlanguage{thai}
 \setotherlanguage{vietnamese}
+\setotherlanguage{english}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{図}
 \newcounter{ngloss}
 \renewcommand{\thengloss}{\alph{ngloss}}
 \makeatletter
 \newenvironment{gloss}[1][]{
-    \refstepcounter{ngloss}
-    \begin{table}[#1]
-    \raggedright
+  \refstepcounter{ngloss}
+  \begin{table}[#1]
+  \raggedright
 }{
-    \end{table}
+  \end{table}
 }
 \makeatother
 \newref{tab}
@@ -63,10 +64,9 @@
 \usepackage[%
   backend=biber,
   style=pecorarista,
-  sorting=nyvt,
-  urldate=long,
   natbib=true,
-  maxnames=2
+  maxnames=2,
+  language=auto
 ]{biblatex}
 \addbibresource{demo.bib}
 \DeclareMathOperator{\exponential}{exp}
@@ -78,14 +78,51 @@
   }%
   \MakeFramed {\advance\hsize-\width \FrameRestore}}%
 {\endMakeFramed}
-\lstset{%
-  language={[LaTeX]TeX},
-  basicstyle=\ttfamily\footnotesize,
-  keywordstyle=\color{sRed}\bfseries,
-  texcsstyle=*\color{sRed}\bfseries,
-  commentstyle=\color{sDarkBlue},
-  morekeywords={usebeamertemplate,newref,setrefstyle,mathlabel,mathref}
-}
+\lstnewenvironment{LaTeXCode}{%
+  \lstset{%
+    language={[LaTeX]TeX},
+    escapechar={|},
+    alsoletter={*},
+    basicstyle=\ttfamily\footnotesize,
+    texcsstyle=*\color{sRed}\bfseries,
+    commentstyle=\color{sDarkBlue},
+    moretexcs={%
+      usebeamertemplate,
+      newref,
+      setrefstyle,
+      mathlabel,
+      mathref,
+      ltjsetparameter,
+      arabicfont,
+      newfontfamily,
+      translitfont,
+      SetTranslitFont,
+      SetTranslitStyle,
+      SetTranslitConvention,
+      RequireBibliographyStyle,
+      AtEveryBibitem,
+      DeclareNameAlias,
+      DeclareFieldFormat,
+      printlist,
+      printdate,
+      addcomma,
+      addperiod,
+      finentry,
+      revsdnamepunct,
+      renewbibmacro*,
+      renewcommand*,
+      iffieldequalstr
+    }
+  }
+}{}
+\lstnewenvironment{PythonCode}{%
+  \lstset{%
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{sRed}\bfseries,
+    commentstyle=\color{sDarkBlue},
+    morekeywords={def, with, as, for, in}
+  }
+}{}
 \renewcommand\refname{参考文献}
 \renewcommand\appendixname{付録}
 \title{Lua\TeX{}-jaとbeamerで研究発表用のスライドを作る}
@@ -108,34 +145,34 @@
     \section{はじめに}
     \begin{frame}
         \frametitle{はじめに}
-        このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}のデモとして作ったものです。
+        このスライドは \faGithub\ \href{https://github.com/pecorarista/sakuratheme}{\ttfamily pecorarista/sakuratheme}のデモとして作ったものです．
 
         \bigskip
 
-        そのため作り方を詳しく説明することはしませんが、
-        コードはすべて上記のレポジトリに含まれているので気になる方は参照ください。
+        そのため作り方を詳しく説明することはしませんが，
+        コードはすべて上記のレポジトリに含まれているので気になる方は参照ください．
     \end{frame}
 
     \begin{frame}[fragile]
         \frametitle{用紙サイズ}
-        アスペクト比の設定は\texttt{documentclass}のオプションで設定することができます。
-        デフォルトは4:3です。
+        アスペクト比の設定は\texttt{documentclass}のオプションで設定することができます．
+        デフォルトは4:3です．
         \begin{leftbar}
-\begin{lstlisting}
+\begin{LaTeXCode}
 \documentclass[%
     aspectratio=169
 ]{beamer}
-\end{lstlisting}
+\end{LaTeXCode}
         \end{leftbar}
     \end{frame}
 
-    \section{基本}
+    \section{Tips}
     \begin{frame}
         \frametitle{表の挿入}
-        Beamerでは論文中の表のソースコードをほぼそのまま利用できて便利です。
+        Beamerでは論文中の表のソースコードをほぼそのまま利用できて便利です．
         \begin{table}
             \centering
-            \caption{表の例。}\tablabel{tab}
+            \caption{表の例．}\tablabel{tab}
             \begin{tabular}{lrrr}
                 \toprule
                 \header{Model}   & \header{Precision} & \header{Recall} & \header{F1} \\
@@ -151,10 +188,10 @@
 
     \begin{frame}
         \frametitle{アイコン}
-        アイコンを入力したい場合は\href{https://ctan.org/pkg/fontawesome5?lang=en}{fontawesome5}パッケージを利用すると便利です。
+        アイコンを入力したい場合は\href{https://ctan.org/pkg/fontawesome5?lang=en}{fontawesome5}パッケージを利用すると便利です．
         \begin{table}
             \centering
-            \caption{アイコンを使った表の例。}\tablabel{tabfontawesome}
+            \caption{アイコンを使った表の例．}\tablabel{tabfontawesome}
             \begin{tabular}{lcc}
                 \toprule
                 \header{Model}   & \header{Algorithm A} & \header{Algorithm B} \\
@@ -170,7 +207,7 @@
 
     \begin{frame}[fragile]
         \frametitle{CCアイコン}
-        Creative Commonsライセンスの作品を引用する際には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です。
+        Creative Commonsライセンスの作品を引用する際には\href{https://ctan.org/pkg/ccicons}{\texttt{ccicons}}パッケージのアイコンを利用すると便利です．
 
         \bigskip
 
@@ -188,12 +225,12 @@
         \addtolength{\leftmargini}{\labelsep}
         箇条書きのインデントを下げたくない場合はフレーム内で
         \begin{leftbar}
-\begin{lstlisting}
+\begin{LaTeXCode}
 \settowidth{\leftmargini}{\usebeamertemplate{itemize item}}
 \addtolength{\leftmargini}{\labelsep}
-\end{lstlisting}
+\end{LaTeXCode}
         \end{leftbar}
-        としてください。
+        としてください．
 
         \bigskip
 
@@ -217,22 +254,32 @@ Cấm hút thuốc
     \begin{frame}[fragile]
         \frametitle{コード}
         \href{https://ctan.org/pkg/listings?lang=en}{\texttt{listing}}パッケージを使って
-        コードを挿入することができます。その際にフレームに\texttt{fragile}を指定しないと、
-        タイプセットの際にエラーが生じます。
+        コードを挿入することができます．その際にフレームに\texttt{fragile}オプションを指定しないと，
+        タイプセットの際にエラーが生じるので気をつけてください．
+
+        \bigskip
+
+        左の縦線は\href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使っています．
+
+        \smallskip
+
     \begin{leftbar}
-\begin{lstlisting}[language=Python]
+\begin{PythonCode}
 def main() -> None:
     with Path('test.jsonl').open(mode='r') as r:
         reader = jsonlines.Reader(r)
         for obj in reader:
             tokens = tokenize(obj['text'])
-\end{lstlisting}
+\end{PythonCode}
     \end{leftbar}
+
     \end{frame}
 
     \begin{frame}
         \frametitle{長め文章の引用}
-        \href{https://ctan.org/pkg/framed}{\texttt{framed}}パッケージの\inlinecommand{leftbar}環境を使うと引用であることが分かりやすくなります。
+        左の縦線は長めの文章を引用する際にも便利です．
+
+        \bigskip
 
         \begin{quoteblock}
 
@@ -255,11 +302,9 @@ def main() -> None:
     \end{frame}
 
 
-    \section{言語学}
-    \subsection{グロス}
     \begin{frame}[fragile]
         \frametitle{グロス}
-        大量に記載するのでなければ\href{https://ctan.org/pkg/gb4e?lang=en}{gb4e}ではなく\texttt{table}環境で十分だと思います。
+        大量に記載するのでなければ\href{https://ctan.org/pkg/gb4e?lang=en}{gb4e}ではなく\texttt{table}環境で十分だと思います．
 
         \bigskip
 
@@ -277,29 +322,16 @@ def main() -> None:
 
         \bigskip
 
-        上の\glossref{ru}は\texttt{table}環境（をラップして定義した\texttt{gloss}環境）で作成しています。
-        詳しくはこのスライドのソースコードを参照してください。
+        上の\glossref{ru}は\texttt{table}環境（をラップして定義した\texttt{gloss}環境）で作成しています．
+        詳しくはこのスライドのソースコードを参照してください．
     \end{frame}
 
     \subsection{アラビア文字}
     \begin{frame}[fragile]
     \frametitle{アラビア文字I}
-        もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします。
+        もしアラビア文字を入力したければ\href{https://ctan.org/pkg/arabluatex?lang=en}{arabluatex}の利用をおすすめします．
     \begin{leftbar}
-    \begin{lstlisting}[%
-        language={[LaTeX]TeX},
-        % asterisk for highlight backslash
-        moretexcs={
-            ltjsetparameter,
-            arabicfont,
-            newfontfamily,
-            translitfont,
-            SetTranslitFont,
-            SetTranslitStyle,
-            SetTranslitConvention
-        },
-        morekeywords={},
-    ]
+\begin{LaTeXCode}
 \usepackage{arabluatex}
 \newfontfamily\arabicfont[%
   Script=Arabic, % enable ligatures
@@ -313,7 +345,7 @@ def main() -> None:
 \SetTranslitFont{\translitfont}
 \SetTranslitStyle{\itshape} % \upshape, \itshape
 \SetTranslitConvention{arabica} % dmg, loc, arabica
-    \end{lstlisting}
+\end{LaTeXCode}
     \end{leftbar}
     \end{frame}
 
@@ -323,19 +355,14 @@ def main() -> None:
         転写の方法は\inlinecommand{dmg}, \inlinecommand{arabica}, \inlinecommand{loc}の3種類から選べます．
 
         \begin{leftbar}
-        \begin{lstlisting}[%
-            language={[LaTeX]TeX},
-            % asterisk for highlight backslash
-            moretexcs={arb},
-            morekeywords={arab}
-        ]
+\begin{LaTeXCode}
 \begin{arab}[fullvoc]
     'anta tatakallamu 'l-lu.gaTa
     'l-`arabiyyaTa jayyidaN!
 \end{arab}
 \arb[trans]{'anta tatakallamu
             'l-lu.gaTa 'l-`arabiyyaTa jayyidaN!}
-        \end{lstlisting}
+\end{LaTeXCode}
         \end{leftbar}
 
         \begin{arab}[fullvoc]
@@ -348,8 +375,8 @@ def main() -> None:
     \end{frame}
 
     \begin{frame}
-        \frametitle{係り受け解析}
-        係り受けの図を挿入するには\href{https://ctan.org/pkg/tikz-dependency}{\texttt{tikz-dependency}}を利用します．
+        \frametitle{複数の図の挿入}
+        複数の図を挿入するには\href{https://ctan.org/pkg/subcaption}{\texttt{subcaption}}を利用します．
 
         \bigskip
 
@@ -359,7 +386,7 @@ def main() -> None:
                 \scalebox{.9}{%
                     \begin{dependency}[hide label]
                         \begin{deptext}[column sep=2\zw]
-                            兵庫を \& 訪れた。 \\
+                            兵庫を \& 訪れた． \\
                         \end{deptext}
                         \depedge{2}{1}{目的語}
                     \end{dependency}
@@ -387,6 +414,44 @@ def main() -> None:
     \end{frame}
 
     \begin{frame}
+        \frametitle{ページの分割}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                abasdkj
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                abclkj
+            \end{column}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}[fragile]
+        \frametitle{参考文献の設定}
+        \href{https://ctan.org/pkg/biblatex?lang=en}{\texttt{biblatex}}を使います。
+        文献情報が単純な場合は\texttt{chicago-notes}をベースに\texttt{.bbx}を
+        以下のような修正を行うことで日本語対応ができます。
+        \begin{leftbar}
+\begin{LaTeXCode}
+\RequireBibliographyStyle{chicago-notes}
+
+\AtEveryBibitem{%
+  \iffieldequalstr{langid}{japanese}{%
+    \DeclareNameAlias{sortname}{family-given}
+    \DeclareFieldFormat{title}{『|{{\ttfamily\bfseries \textcolor{sXlsxGreen}{\#1}}}|』}
+    \renewcommand*{\revsdnamepunct}{}
+    \renewcommand*{\addperiod}{}
+    \renewcommand*{\addcomma}{}
+    \renewcommand*{\finentry}{.}
+    \renewbibmacro*{publ+loc+year}{%
+      \printlist{publisher}(\printdate)．
+    }}{}
+}
+\end{LaTeXCode}
+        \end{leftbar}
+    \end{frame}
+
+
+    \begin{frame}
         \frametitle{その他}
         箇条書きの項目が鉤括弧から始まるときの注意点
         \begin{itemize}
@@ -411,9 +476,11 @@ def main() -> None:
         plain
     ]{参考文献}
 
+    \begin{english}
     \printbibliography[%
         title={参考文献}  % for PDF bookmark
     ]
+    \end{english}
 
     \end{frame}
 
